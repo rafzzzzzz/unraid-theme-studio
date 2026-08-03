@@ -61,6 +61,7 @@
   }
 
   function syncControls() {
+    query('#ts-theme-enabled').checked = state.enabled !== false;
     query('#ts-theme-name').value = state.name;
     query('#ts-radius').value = state.radius;
     query('#ts-radius-output').textContent = state.radius + ' px';
@@ -71,8 +72,17 @@
       row.querySelector('input[type="color"]').value = value;
       row.querySelector('.ts-hex').value = value;
     });
+    updateEnabledState();
     updatePreview();
     updateHistoryButtons();
+  }
+
+  function updateEnabledState() {
+    var enabled = state.enabled !== false;
+    root.classList.toggle('is-theme-disabled', !enabled);
+    query('#ts-enabled-copy').textContent = enabled
+      ? 'Generated theme overrides will be active after Apply'
+      : 'Apply to remove overrides; your palette stays saved';
   }
 
   function updatePreview() {
@@ -152,7 +162,8 @@
 
     if (boot.mock) {
       window.setTimeout(function () {
-        button.disabled = false; button.innerHTML = original; toast('Theme applied in preview mode');
+        button.disabled = false; button.innerHTML = original;
+        toast(state.enabled === false ? 'Theming disabled in preview mode' : 'Theme applied in preview mode');
       }, 450);
       return;
     }
@@ -163,7 +174,12 @@
     body.set('theme', JSON.stringify(state));
     fetch(boot.endpoint, {method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},body:body.toString(),credentials:'same-origin'})
       .then(function (response) { if (!response.ok) throw new Error('Save failed (' + response.status + ')'); return response.json(); })
-      .then(function (result) { if (!result.ok) throw new Error(result.error || 'Save failed'); toast('Theme applied — refresh any open UNRAID tabs'); })
+      .then(function (result) {
+        if (!result.ok) throw new Error(result.error || 'Save failed');
+        toast(state.enabled === false
+          ? 'Theming disabled — refresh any open UNRAID tabs'
+          : 'Theme applied — refresh any open UNRAID tabs');
+      })
       .catch(function (error) { toast(error.message, true); })
       .finally(function () { button.disabled = false; button.innerHTML = original; });
   }
@@ -240,6 +256,11 @@
   function safeFilename() { return (state.name || 'unraid-theme').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'') || 'unraid-theme'; }
 
   function bindEvents() {
+    query('#ts-theme-enabled').addEventListener('change', function (event) {
+      state.enabled = event.target.checked;
+      updateEnabledState();
+      scheduleHistory();
+    });
     query('#ts-theme-name').addEventListener('input', function (event) { state.name = event.target.value; scheduleHistory(); });
     query('#ts-radius').addEventListener('input', function (event) { state.radius = Number(event.target.value); query('#ts-radius-output').textContent = state.radius + ' px'; updatePreview(); scheduleHistory(); });
     queryAll('input[name="ts-density"]').forEach(function (input) { input.addEventListener('change', function () { if (input.checked) { state.density = input.value; updatePreview(); scheduleHistory(); } }); });
@@ -261,7 +282,7 @@
           toast('Preset unavailable — refresh this page and try again', true);
           return;
         }
-        setState(preset);
+        setState(Object.assign({}, preset, {enabled: state.enabled !== false}));
         queryAll('[data-preset]').forEach(function (item) {
           var selected = item === button;
           item.classList.toggle('is-active', selected);

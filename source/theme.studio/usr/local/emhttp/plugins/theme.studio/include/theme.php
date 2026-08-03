@@ -7,6 +7,7 @@ const THEME_STUDIO_LIVE_CSS = '/usr/local/emhttp/plugins/theme.studio/sheets/The
 function theme_studio_defaults(): array
 {
     return [
+        'enabled' => true,
         'name' => 'Midnight Orange',
         'background' => '#121212',
         'surface' => '#1d1b1b',
@@ -30,6 +31,11 @@ function theme_studio_validate(array $input): array
 {
     $defaults = theme_studio_defaults();
     $output = [];
+    $enabled = $input['enabled'] ?? $defaults['enabled'];
+    $output['enabled'] = filter_var($enabled, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+    if ($output['enabled'] === null) {
+        $output['enabled'] = $defaults['enabled'];
+    }
     $output['name'] = trim((string)($input['name'] ?? $defaults['name']));
     $output['name'] = substr($output['name'] ?: $defaults['name'], 0, 48);
 
@@ -59,6 +65,9 @@ function theme_studio_load(): array
 function theme_studio_css(array $theme): string
 {
     $t = theme_studio_validate($theme);
+    if (!$t['enabled']) {
+        return "/* UNRAID Theme Studio is disabled. Saved theme settings are preserved. */\n";
+    }
     $gap = $t['density'] === 'compact' ? '6px' : '10px';
     $name = str_replace(['*/', "\r", "\n"], '', $t['name']);
 

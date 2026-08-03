@@ -10,6 +10,8 @@ without editing CSS by hand.
 - Color controls for the page, panels, text, secondary text, borders, header,
   links/accent, success, warning, and danger states
 - Corner-radius and density controls
+- Master enable/disable switch that preserves the saved palette while removing
+  all generated Theme Studio overrides
 - Twelve built-in presets—including Dracula, Catppuccin Mocha, Oblivion, Nord,
   Tokyo Night, Gruvbox, Solarized, Everforest, Rosé Pine, and Plex Inspired—plus
   undo/redo, JSON import/export, and CSS export

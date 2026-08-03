@@ -14,6 +14,7 @@
 
 <CHANGES>
 ### &version;
+- Add a master enable/disable switch without deleting saved theme settings.
 - Override Unassigned Devices and Preclear hardcoded table colors.
 - Add Everforest, Rosé Pine, and Plex Inspired presets.
 - Theme Dynamix tables, alternating rows, plugin lists, dropdowns, tooltips, and file trees.

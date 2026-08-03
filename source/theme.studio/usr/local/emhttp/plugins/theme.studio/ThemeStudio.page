@@ -24,6 +24,12 @@ $themeStudioAssetVersion = (string)@filemtime("$docroot/plugins/theme.studio/ass
 
   <div class="ts-workspace">
     <aside class="ts-controls" aria-label="Theme controls">
+      <label class="ts-master-toggle">
+        <input id="ts-theme-enabled" type="checkbox">
+        <span class="ts-toggle-track" aria-hidden="true"><span></span></span>
+        <span class="ts-toggle-copy"><strong>Enable Theme Studio</strong><small id="ts-enabled-copy">Generated theme overrides will be active after Apply</small></span>
+      </label>
+
       <label class="ts-name-label">Theme name
         <input id="ts-theme-name" type="text" maxlength="48" autocomplete="off">
       </label>
