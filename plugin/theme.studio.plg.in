@@ -14,6 +14,8 @@
 
 <CHANGES>
 ### &version;
+- Fix stale browser caching that made new presets fall back to Midnight.
+- Show which preset is selected and reject unknown preset data safely.
 - Add custom plugin artwork and popular theme presets.
 - Make primary text and accent colors apply to top and sidebar navigation.
 - Fix generated variables being overridden by stock theme selectors.

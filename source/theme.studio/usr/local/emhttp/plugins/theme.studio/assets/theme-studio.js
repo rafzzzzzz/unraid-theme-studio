@@ -212,7 +212,23 @@
     });
 
     queryAll('[data-tab]').forEach(function (tab) { tab.addEventListener('click', function () { queryAll('[data-tab]').forEach(function (x) { x.classList.toggle('is-active', x === tab); }); queryAll('[data-panel]').forEach(function (panel) { panel.classList.toggle('is-active', panel.dataset.panel === tab.dataset.tab); }); }); });
-    queryAll('[data-preset]').forEach(function (button) { button.addEventListener('click', function () { setState(presets[button.dataset.preset]); toast(button.textContent.trim() + ' preset loaded'); }); });
+    queryAll('[data-preset]').forEach(function (button) {
+      button.setAttribute('aria-pressed', 'false');
+      button.addEventListener('click', function () {
+        var preset = presets[button.dataset.preset];
+        if (!preset) {
+          toast('Preset unavailable — refresh this page and try again', true);
+          return;
+        }
+        setState(preset);
+        queryAll('[data-preset]').forEach(function (item) {
+          var selected = item === button;
+          item.classList.toggle('is-active', selected);
+          item.setAttribute('aria-pressed', selected ? 'true' : 'false');
+        });
+        toast(button.textContent.trim() + ' preset loaded');
+      });
+    });
     queryAll('[data-viewport]').forEach(function (button) { button.addEventListener('click', function () { queryAll('[data-viewport]').forEach(function (x) { x.classList.toggle('is-active', x === button); }); query('#ts-preview-stage').classList.toggle('is-mobile', button.dataset.viewport === 'mobile'); }); });
 
     query('[data-action="undo"]').addEventListener('click', function () { if (historyIndex > 0) { historyIndex -= 1; state = clone(history[historyIndex]); syncControls(); } });

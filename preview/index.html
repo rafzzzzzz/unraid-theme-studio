@@ -18,7 +18,7 @@
         var html = page.slice(marker + 5)
           .replace(/^<\?php[\s\S]*?\?>\s*/,'')
           .replace(/<script>\s*window\.ThemeStudioBootstrap[\s\S]*?<\/script>/, '<script>window.ThemeStudioBootstrap={mock:true,config:{},defaults:{name:"Midnight Orange",background:"#121212",surface:"#1D1B1B",surfaceAlt:"#262626",text:"#F2F2F2",textMuted:"#A8A8A8",accent:"#FF8C2F",accentHover:"#FFAD66",border:"#404040",headerBackground:"#1D1B1B",headerText:"#FFFFFF",positive:"#33CC33",warning:"#FFD324",danger:"#E22828",radius:8,density:"comfortable"}};<\/script>')
-          .replace('/plugins/theme.studio/assets/theme-studio.js?v=1.0.0','../source/theme.studio/usr/local/emhttp/plugins/theme.studio/assets/theme-studio.js');
+          .replace(/\/plugins\/theme\.studio\/assets\/theme-studio\.js\?v=[^"']+/,'../source/theme.studio/usr/local/emhttp/plugins/theme.studio/assets/theme-studio.js');
         document.body.innerHTML = html;
         Array.prototype.slice.call(document.body.querySelectorAll('script')).forEach(function (oldScript) {
           var script = document.createElement('script');

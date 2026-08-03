@@ -6,6 +6,7 @@ Tag="paint-brush"
 <?php
 require_once "$docroot/plugins/theme.studio/include/theme.php";
 $themeStudioConfig = theme_studio_load();
+$themeStudioAssetVersion = (string)@filemtime("$docroot/plugins/theme.studio/assets/theme-studio.js");
 ?>
 <div id="theme-studio-app" class="ts-app">
   <header class="ts-heading">
@@ -128,4 +129,4 @@ window.ThemeStudioBootstrap = {
   endpoint: '/plugins/theme.studio/include/save.php'
 };
 </script>
-<script src="/plugins/theme.studio/assets/theme-studio.js?v=1.0.0"></script>
+<script src="/plugins/theme.studio/assets/theme-studio.js?v=<?=rawurlencode($themeStudioAssetVersion)?>"></script>
