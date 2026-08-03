@@ -1,0 +1,5 @@
+dist/
+*.txz
+!archive/*.txz
+*.sha256
+.DS_Store

@@ -1,0 +1,126 @@
+Menu="UserPreferences:30"
+Title="Theme Studio"
+Icon="icon-paint-brush"
+Tag="paint-brush"
+---
+<?php
+require_once "$docroot/plugins/theme.studio/include/theme.php";
+$themeStudioConfig = theme_studio_load();
+?>
+<div id="theme-studio-app" class="ts-app">
+  <header class="ts-heading">
+    <div>
+      <span class="ts-eyebrow">UNRAID 7.2+</span>
+      <h2>Theme Studio</h2>
+      <p>Shape your dashboard, see every change live, then apply it across the webGUI.</p>
+    </div>
+    <div class="ts-heading-actions">
+      <button type="button" class="ts-button ts-button-quiet" data-action="undo" disabled><i class="fa fa-undo"></i> Undo</button>
+      <button type="button" class="ts-button ts-button-quiet" data-action="redo" disabled><i class="fa fa-repeat"></i> Redo</button>
+      <button type="button" class="ts-button ts-button-primary" data-action="save"><i class="fa fa-check"></i> Apply theme</button>
+    </div>
+  </header>
+
+  <div class="ts-workspace">
+    <aside class="ts-controls" aria-label="Theme controls">
+      <label class="ts-name-label">Theme name
+        <input id="ts-theme-name" type="text" maxlength="48" autocomplete="off">
+      </label>
+
+      <div class="ts-presets" aria-label="Theme presets">
+        <button type="button" data-preset="midnight"><span style="--swatch:#121212"></span>Midnight</button>
+        <button type="button" data-preset="graphite"><span style="--swatch:#20242a"></span>Graphite</button>
+        <button type="button" data-preset="arctic"><span style="--swatch:#edf2f7"></span>Arctic</button>
+        <button type="button" data-preset="ember"><span style="--swatch:#211412"></span>Ember</button>
+      </div>
+
+      <nav class="ts-tabs" aria-label="Editor sections">
+        <button type="button" class="is-active" data-tab="colors">Colors</button>
+        <button type="button" data-tab="surface">Surface</button>
+      </nav>
+
+      <section class="ts-panel is-active" data-panel="colors">
+        <div id="ts-color-controls"></div>
+      </section>
+
+      <section class="ts-panel" data-panel="surface">
+        <label class="ts-range-label"><span>Corner radius <output id="ts-radius-output"></output></span>
+          <input id="ts-radius" type="range" min="0" max="24" step="1">
+        </label>
+        <fieldset class="ts-segmented">
+          <legend>Information density</legend>
+          <label><input type="radio" name="ts-density" value="compact"> Compact</label>
+          <label><input type="radio" name="ts-density" value="comfortable"> Comfortable</label>
+        </fieldset>
+        <div class="ts-contrast-card">
+          <span class="ts-contrast-icon">Aa</span>
+          <div><strong>Text contrast</strong><small id="ts-contrast-copy">Checking…</small></div>
+          <span id="ts-contrast-badge" class="ts-badge">—</span>
+        </div>
+      </section>
+
+      <footer class="ts-tools">
+        <button type="button" data-action="import"><i class="fa fa-upload"></i> Import</button>
+        <button type="button" data-action="export-json"><i class="fa fa-download"></i> JSON</button>
+        <button type="button" data-action="export-css"><i class="fa fa-code"></i> CSS</button>
+        <button type="button" data-action="reset"><i class="fa fa-refresh"></i> Reset</button>
+        <input id="ts-import-file" type="file" accept="application/json,.json" hidden>
+      </footer>
+    </aside>
+
+    <main class="ts-preview-shell">
+      <div class="ts-preview-toolbar">
+        <div class="ts-traffic"><span></span><span></span><span></span></div>
+        <span class="ts-preview-address"><i class="fa fa-lock"></i> tower.local / Dashboard</span>
+        <div class="ts-viewport-switcher" aria-label="Preview size">
+          <button type="button" class="is-active" data-viewport="desktop" title="Desktop"><i class="fa fa-desktop"></i></button>
+          <button type="button" data-viewport="mobile" title="Mobile"><i class="fa fa-mobile"></i></button>
+        </div>
+      </div>
+
+      <div id="ts-preview-stage" class="ts-preview-stage">
+        <div id="ts-dashboard-preview" class="ts-dashboard">
+          <header class="ts-dash-header">
+            <div class="ts-logo-mark"><span>UN</span><span>RAID</span></div>
+            <div class="ts-server"><strong>TOWER</strong><small>Media server · 192.168.1.20</small></div>
+            <div class="ts-header-icons"><i class="fa fa-search"></i><i class="fa fa-terminal"></i><i class="fa fa-bell-o"></i></div>
+          </header>
+          <nav class="ts-dash-nav"><a class="is-active">Dashboard</a><a>Main</a><a>Shares</a><a>Users</a><a>Settings</a><a>Plugins</a><a>Docker</a><a>VMs</a></nav>
+          <section class="ts-dash-content">
+            <div class="ts-preview-title"><div><small>MONDAY, AUGUST 3</small><h3>Good evening, Rafa.</h3></div><span><i class="fa fa-circle"></i> Array healthy</span></div>
+            <div class="ts-stat-grid">
+              <article><span class="ts-stat-icon"><i class="fa fa-microchip"></i></span><div><small>PROCESSOR</small><strong>Intel Core i7</strong><em>24% load</em></div><div class="ts-ring" style="--value:24"><b>24<small>%</small></b></div></article>
+              <article><span class="ts-stat-icon"><i class="fa fa-server"></i></span><div><small>MEMORY</small><strong>32.1 GB</strong><em>of 64 GB</em></div><div class="ts-ring" style="--value:50"><b>50<small>%</small></b></div></article>
+              <article><span class="ts-stat-icon"><i class="fa fa-hdd-o"></i></span><div><small>ARRAY</small><strong>31.8 TB</strong><em>of 48 TB</em></div><div class="ts-ring" style="--value:66"><b>66<small>%</small></b></div></article>
+            </div>
+            <div class="ts-preview-columns">
+              <article class="ts-dash-card ts-array-card">
+                <header><div><small>STORAGE</small><h4>Array devices</h4></div><button><i class="fa fa-ellipsis-h"></i></button></header>
+                <div class="ts-device"><i class="fa fa-check-circle"></i><div><strong>Parity</strong><small>WDC_WD180EDGZ</small></div><span>18 TB</span><em>Healthy</em></div>
+                <div class="ts-device"><i class="fa fa-check-circle"></i><div><strong>Disk 1</strong><small>ST16000NM001G</small></div><span>16 TB</span><em>Healthy</em></div>
+                <div class="ts-device"><i class="fa fa-check-circle"></i><div><strong>Disk 2</strong><small>ST14000NM0018</small></div><span>14 TB</span><em>Healthy</em></div>
+              </article>
+              <article class="ts-dash-card ts-docker-card">
+                <header><div><small>SERVICES</small><h4>Docker</h4></div><a>View all</a></header>
+                <div class="ts-app-row"><span class="ts-app-icon plex">P</span><div><strong>Plex</strong><small>Up 4 days</small></div><em>Running</em></div>
+                <div class="ts-app-row"><span class="ts-app-icon photos"><i class="fa fa-picture-o"></i></span><div><strong>Immich</strong><small>Up 4 days</small></div><em>Running</em></div>
+                <div class="ts-app-row"><span class="ts-app-icon cloud"><i class="fa fa-cloud"></i></span><div><strong>Nextcloud</strong><small>Up 2 days</small></div><em>Running</em></div>
+              </article>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+  <div id="ts-toast" class="ts-toast" role="status" aria-live="polite"></div>
+</div>
+
+<script>
+window.ThemeStudioBootstrap = {
+  config: <?=json_encode($themeStudioConfig, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT)?>,
+  defaults: <?=json_encode(theme_studio_defaults(), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT)?>,
+  csrf: <?=json_encode($var['csrf_token'] ?? '')?>,
+  endpoint: '/plugins/theme.studio/include/save.php'
+};
+</script>
+<script src="/plugins/theme.studio/assets/theme-studio.js?v=1.0.0"></script>

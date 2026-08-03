@@ -1,0 +1,44 @@
+<?xml version="1.0" standalone="yes"?>
+<!DOCTYPE PLUGIN [
+<!ENTITY name      "theme.studio">
+<!ENTITY author    "Rafael Marques">
+<!ENTITY version   "@VERSION@">
+<!ENTITY md5       "@MD5@">
+<!ENTITY github    "@GITHUB_REPOSITORY@">
+<!ENTITY branch    "main">
+<!ENTITY launch    "Settings/UserPreferences/ThemeStudio">
+<!ENTITY pluginURL "https://raw.githubusercontent.com/&github;/&branch;/theme.studio.plg">
+]>
+
+<PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" icon="paint-brush" min="7.2.0">
+
+<CHANGES>
+### &version;
+- Fix generated variables being overridden by stock theme selectors.
+- Initial release.
+- Live dashboard preview and thirteen semantic color controls.
+- Presets, contrast checking, density, corner radius, undo/redo, import/export.
+- Persistent, validated theme generation with no stock webGUI file patches.
+</CHANGES>
+
+<FILE Run="/bin/bash">
+<INLINE>
+mkdir -p /boot/config/plugins/&name;
+rm -f /boot/config/plugins/&name;/&name;-*.txz
+</INLINE>
+</FILE>
+
+<FILE Name="/boot/config/plugins/&name;/&name;-&version;-x86_64-1.txz" Run="upgradepkg --install-new">
+<URL>https://raw.githubusercontent.com/&github;/&branch;/archive/&name;-&version;-x86_64-1.txz</URL>
+<MD5>&md5;</MD5>
+</FILE>
+
+<FILE Run="/bin/bash" Method="remove">
+<INLINE>
+removepkg &name;-&version;-x86_64-1
+rm -rf /usr/local/emhttp/plugins/&name;
+rm -rf /boot/config/plugins/&name;
+logger -t &name; "Theme Studio removed"
+</INLINE>
+</FILE>
+</PLUGIN>

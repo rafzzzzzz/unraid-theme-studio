@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Containers>
+  <PluginURL>https://raw.githubusercontent.com/rafzzzzzz/unraid-theme-studio/main/theme.studio.plg</PluginURL>
+  <PluginAuthor>Rafael Marques</PluginAuthor>
+  <Beta>True</Beta>
+  <Category>Tools:System</Category>
+  <Name>UNRAID Theme Studio</Name>
+  <Description>Create a custom UNRAID 7.2+ webGUI theme with color pickers, a live dashboard preview, contrast checks, presets, and portable theme exports.</Description>
+  <Overview>A visual, native theme editor for the UNRAID webGUI.</Overview>
+  <Project>https://github.com/rafzzzzzz/unraid-theme-studio</Project>
+  <Support>https://github.com/rafzzzzzz/unraid-theme-studio/issues</Support>
+  <Icon>https://raw.githubusercontent.com/rafzzzzzz/unraid-theme-studio/main/source/theme.studio/usr/local/emhttp/plugins/theme.studio/icons/theme-studio.svg</Icon>
+  <IconFA>paint-brush</IconFA>
+  <MinVer>7.2.0</MinVer>
+  <License>MIT</License>
+</Containers>

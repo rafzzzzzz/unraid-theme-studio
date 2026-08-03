@@ -1,0 +1,8 @@
+Menu="Buttons:8"
+Title="Theme Studio"
+Icon="icon-paint-brush"
+Code="e92c"
+---
+<script>
+function ThemeStudioButton() { window.location.href = '/ThemeStudio'; }
+</script>

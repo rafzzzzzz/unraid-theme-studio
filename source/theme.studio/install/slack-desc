@@ -1,0 +1,11 @@
+theme.studio: theme.studio (visual theme editor for UNRAID)
+theme.studio:
+theme.studio: Create an UNRAID webGUI theme with color pickers and a live
+theme.studio: dashboard preview. Themes are persisted on the flash drive and
+theme.studio: applied through CSS custom properties without patching webGUI files.
+theme.studio:
+theme.studio: Project: https://github.com/rafzzzzzz/unraid-theme-studio
+theme.studio:
+theme.studio:
+theme.studio:
+theme.studio:

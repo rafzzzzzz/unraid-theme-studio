@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title">
+  <title id="title">UNRAID Theme Studio</title>
+  <defs><linearGradient id="g" x1="18" y1="106" x2="110" y2="22" gradientUnits="userSpaceOnUse"><stop stop-color="#e22828"/><stop offset="1" stop-color="#ff9d45"/></linearGradient></defs>
+  <rect x="8" y="8" width="112" height="112" rx="26" fill="#171717"/>
+  <path d="M64 24c-23.2 0-42 16.2-42 36.1 0 12.8 8 23.9 19.8 30.3 4.4 2.4 9.7-.8 9.7-5.8v-3.1c0-5.9 4.8-10.7 10.7-10.7h4.1c21.9 0 39.7-10.3 39.7-23C106 34.7 87.2 24 64 24Z" fill="url(#g)"/>
+  <circle cx="42" cy="55" r="6" fill="#ffd324"/><circle cx="60" cy="42" r="6" fill="#fff"/><circle cx="80" cy="45" r="6" fill="#33cc33"/><circle cx="91" cy="61" r="6" fill="#5aa9ff"/>
+  <path d="m69 76 31 31" stroke="#f2f2f2" stroke-width="10" stroke-linecap="round"/><path d="m65 73 9-9 10 10-9 9z" fill="#fff"/>
+</svg>
