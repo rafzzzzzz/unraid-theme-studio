@@ -2,18 +2,20 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "theme.studio">
 <!ENTITY author    "Rafael Marques">
-<!ENTITY version   "2026.08.03.2">
-<!ENTITY md5       "10f8967a5d1b91acd28e04a2d54f3787">
+<!ENTITY version   "2026.08.03.3">
+<!ENTITY md5       "1ff58fd9604f931ff36b110232f53c59">
 <!ENTITY github    "rafzzzzzz/unraid-theme-studio">
 <!ENTITY branch    "main">
 <!ENTITY launch    "Settings/UserPreferences/ThemeStudio">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/&github;/&branch;/theme.studio.plg">
 ]>
 
-<PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" icon="paint-brush" min="7.2.0">
+<PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" icon="theme.studio.png" min="7.2.0">
 
 <CHANGES>
 ### &version;
+- Add custom plugin artwork and popular theme presets.
+- Make primary text and accent colors apply to top and sidebar navigation.
 - Fix generated variables being overridden by stock theme selectors.
 - Initial release.
 - Live dashboard preview and thirteen semantic color controls.

@@ -9,7 +9,7 @@
   <Overview>A visual, native theme editor for the UNRAID webGUI.</Overview>
   <Project>https://github.com/rafzzzzzz/unraid-theme-studio</Project>
   <Support>https://github.com/rafzzzzzz/unraid-theme-studio/issues</Support>
-  <Icon>https://raw.githubusercontent.com/rafzzzzzz/unraid-theme-studio/main/source/theme.studio/usr/local/emhttp/plugins/theme.studio/icons/theme-studio.svg</Icon>
+  <Icon>https://raw.githubusercontent.com/rafzzzzzz/unraid-theme-studio/main/source/theme.studio/usr/local/emhttp/plugins/theme.studio/images/theme.studio.png</Icon>
   <IconFA>paint-brush</IconFA>
   <MinVer>7.2.0</MinVer>
   <License>MIT</License>

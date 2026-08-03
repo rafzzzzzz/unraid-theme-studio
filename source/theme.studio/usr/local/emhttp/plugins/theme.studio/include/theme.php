@@ -73,8 +73,10 @@ html:root[class*="Theme--"] {
   --background-color: {$t['background']};
   --opac-background-color: {$t['background']}F2;
   --mild-background-color: {$t['surfaceAlt']};
+  --alt-background-color: {$t['surface']};
   --dashboard-background-color: {$t['surface']};
   --dashboard-icon-color: {$t['surfaceAlt']};
+  --dashboard-title-action-color: {$t['textMuted']};
   --usage-bar-background-color: {$t['surfaceAlt']};
   --usage-bar-used-background-color: {$t['accent']};
   --usage-disk-background-color: {$t['surfaceAlt']};
@@ -88,11 +90,15 @@ html:root[class*="Theme--"] {
   --table-border-color: {$t['border']};
   --table-background-color: {$t['surface']};
   --table-header-background-color: {$t['surfaceAlt']};
+  --hover-table-row-background-color: {$t['surfaceAlt']};
   --footer-text: {$t['textMuted']};
   --footer-background-color: {$t['surfaceAlt']};
   --header-text-color: {$t['headerText']};
   --header-background-color: {$t['headerBackground']};
   --title-header-background-color: {$t['surfaceAlt']};
+  --hr-color: {$t['border']};
+  --scrollbar-color: {$t['textMuted']};
+  --scrollbar-hover-color: {$t['text']};
   --brand-orange: {$t['accent']};
   --brand-red: {$t['danger']};
   --button-text-color: {$t['accent']};
@@ -110,6 +116,16 @@ html:root[class*="Theme--"] {
 
 body, #displaybox { background-color: var(--background-color); color: var(--text-color); }
 a, .fa-external-link { color: var(--link-text-color); }
+.Theme--nav-top .nav-item a,
+.Theme--nav-top .nav-user a { color: var(--text-color); }
+.Theme--nav-top .nav-item:hover a,
+.Theme--nav-top .nav-item:focus-within a { color: var(--link-text-color); }
+.Theme--nav-top .nav-item:focus:after,
+.Theme--nav-top .nav-item:hover:after,
+.Theme--nav-top .nav-item.active:after { background-color: var(--brand-orange); }
+.Theme--sidebar .nav-item a { color: var(--alt-text-color); }
+.Theme--sidebar .nav-item:hover a,
+.Theme--sidebar .nav-item.active a { color: var(--text-color); }
 input:not([type="button"]):not([type="submit"]), select, textarea,
 .ui-dialog, .sweet-alert, .context-menu-list {
   background-color: var(--input-bg-color);

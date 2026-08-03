@@ -29,9 +29,14 @@ $themeStudioConfig = theme_studio_load();
 
       <div class="ts-presets" aria-label="Theme presets">
         <button type="button" data-preset="midnight"><span style="--swatch:#121212"></span>Midnight</button>
-        <button type="button" data-preset="graphite"><span style="--swatch:#20242a"></span>Graphite</button>
+        <button type="button" data-preset="dracula"><span style="--swatch:#BD93F9"></span>Dracula</button>
+        <button type="button" data-preset="catppuccin"><span style="--swatch:#CBA6F7"></span>Catppuccin</button>
+        <button type="button" data-preset="oblivion"><span style="--swatch:#FCE94F"></span>Oblivion</button>
+        <button type="button" data-preset="nord"><span style="--swatch:#88C0D0"></span>Nord</button>
+        <button type="button" data-preset="tokyo"><span style="--swatch:#7AA2F7"></span>Tokyo Night</button>
+        <button type="button" data-preset="gruvbox"><span style="--swatch:#FABD2F"></span>Gruvbox</button>
+        <button type="button" data-preset="solarized"><span style="--swatch:#2AA198"></span>Solarized</button>
         <button type="button" data-preset="arctic"><span style="--swatch:#edf2f7"></span>Arctic</button>
-        <button type="button" data-preset="ember"><span style="--swatch:#211412"></span>Ember</button>
       </div>
 
       <nav class="ts-tabs" aria-label="Editor sections">

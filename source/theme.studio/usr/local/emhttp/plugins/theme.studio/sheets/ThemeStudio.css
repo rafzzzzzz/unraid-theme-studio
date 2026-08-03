@@ -26,10 +26,10 @@
 .ts-name-label { display:flex; flex-direction:column; gap:7px; padding:18px 20px 12px; color:var(--ts-muted); font-size:10px; font-weight:700; letter-spacing:.7px; text-transform:uppercase; }
 .ts-name-label input { width:100%; height:38px; padding:0 11px; border:1px solid var(--ts-line)!important; border-radius:7px!important; background:#1c1c1c!important; color:#fff!important; font-size:13px!important; box-shadow:none!important; }
 .ts-name-label input:focus { border-color:var(--ts-accent)!important; }
-.ts-presets { display:grid; grid-template-columns:repeat(4,1fr); gap:5px; padding:0 20px 16px; }
-.ts-presets button { display:flex; flex-direction:column; align-items:center; gap:5px; padding:7px 2px; border:1px solid transparent!important; border-radius:6px!important; background:transparent!important; color:var(--ts-muted)!important; font-size:9px!important; text-transform:none!important; box-shadow:none!important; cursor:pointer; }
+.ts-presets { display:grid; grid-template-columns:repeat(3,1fr); gap:5px; padding:0 20px 16px; }
+.ts-presets button { display:flex; align-items:center; gap:6px; min-width:0; padding:7px 6px; border:1px solid transparent!important; border-radius:6px!important; background:transparent!important; color:var(--ts-muted)!important; font-size:9px!important; line-height:1.1!important; text-align:left; text-transform:none!important; box-shadow:none!important; cursor:pointer; }
 .ts-presets button:hover { border-color:var(--ts-line)!important; color:#fff!important; }
-.ts-presets span { width:29px; height:18px; border:1px solid #555; border-radius:4px; background:var(--swatch); box-shadow:inset 0 0 0 4px color-mix(in srgb,var(--swatch),white 8%); }
+.ts-presets span { flex:0 0 auto; width:18px; height:18px; border:1px solid #555; border-radius:5px; background:var(--swatch); box-shadow:inset 0 0 0 4px color-mix(in srgb,var(--swatch),white 8%); }
 .ts-tabs { display:flex; padding:0 20px; border-bottom:1px solid var(--ts-line); }
 .ts-tabs button { flex:1; padding:11px; border:0!important; border-bottom:2px solid transparent!important; background:transparent!important; color:var(--ts-muted)!important; font:700 11px clear-sans,sans-serif!important; text-transform:none!important; box-shadow:none!important; cursor:pointer; }
 .ts-tabs button.is-active { border-bottom-color:var(--ts-accent)!important; color:#fff!important; }

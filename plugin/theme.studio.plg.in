@@ -10,10 +10,12 @@
 <!ENTITY pluginURL "https://raw.githubusercontent.com/&github;/&branch;/theme.studio.plg">
 ]>
 
-<PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" icon="paint-brush" min="7.2.0">
+<PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;" icon="theme.studio.png" min="7.2.0">
 
 <CHANGES>
 ### &version;
+- Add custom plugin artwork and popular theme presets.
+- Make primary text and accent colors apply to top and sidebar navigation.
 - Fix generated variables being overridden by stock theme selectors.
 - Initial release.
 - Live dashboard preview and thirteen semantic color controls.

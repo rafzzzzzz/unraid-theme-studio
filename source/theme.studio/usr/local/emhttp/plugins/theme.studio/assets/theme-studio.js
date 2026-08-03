@@ -29,9 +29,14 @@
 
   var presets = {
     midnight: Object.assign({}, defaults, {name:'Midnight Orange'}),
-    graphite: Object.assign({}, defaults, {name:'Graphite Blue',background:'#15181C',surface:'#20242A',surfaceAlt:'#2B3038',text:'#F4F7FB',textMuted:'#9BA6B2',accent:'#5AA9FF',accentHover:'#86C0FF',border:'#3A414B',headerBackground:'#101317',positive:'#48D597',warning:'#F3C969',danger:'#FF6B6B'}),
-    arctic: Object.assign({}, defaults, {name:'Arctic Light',background:'#EDF2F7',surface:'#FFFFFF',surfaceAlt:'#E2E8F0',text:'#172033',textMuted:'#64748B',accent:'#E8590C',accentHover:'#FF7A2D',border:'#CBD5E1',headerBackground:'#FFFFFF',headerText:'#172033',positive:'#198754',warning:'#B7791F',danger:'#DC3545'}),
-    ember: Object.assign({}, defaults, {name:'Ember',background:'#140E0D',surface:'#211412',surfaceAlt:'#34201B',text:'#FFF2EA',textMuted:'#C49D8E',accent:'#FF6B35',accentHover:'#FF986F',border:'#573027',headerBackground:'#1B100E',positive:'#63D27B',warning:'#F6C453',danger:'#FF4D4F'})
+    dracula: Object.assign({}, defaults, {name:'Dracula',background:'#282A36',surface:'#21222C',surfaceAlt:'#44475A',text:'#F8F8F2',textMuted:'#A6ACCD',accent:'#BD93F9',accentHover:'#FF79C6',border:'#44475A',headerBackground:'#191A21',headerText:'#F8F8F2',positive:'#50FA7B',warning:'#F1FA8C',danger:'#FF5555'}),
+    catppuccin: Object.assign({}, defaults, {name:'Catppuccin Mocha',background:'#1E1E2E',surface:'#181825',surfaceAlt:'#313244',text:'#CDD6F4',textMuted:'#A6ADC8',accent:'#CBA6F7',accentHover:'#F5C2E7',border:'#45475A',headerBackground:'#11111B',headerText:'#CDD6F4',positive:'#A6E3A1',warning:'#F9E2AF',danger:'#F38BA8'}),
+    oblivion: Object.assign({}, defaults, {name:'Oblivion',background:'#2A211C',surface:'#352F2A',surfaceAlt:'#4A4037',text:'#D3D7CF',textMuted:'#A8A39A',accent:'#FCE94F',accentHover:'#E9B96E',border:'#5C5148',headerBackground:'#1E1815',headerText:'#F3F1ED',positive:'#8AE234',warning:'#FCE94F',danger:'#EF2929'}),
+    nord: Object.assign({}, defaults, {name:'Nord',background:'#2E3440',surface:'#3B4252',surfaceAlt:'#434C5E',text:'#ECEFF4',textMuted:'#D8DEE9',accent:'#88C0D0',accentHover:'#8FBCBB',border:'#4C566A',headerBackground:'#242933',headerText:'#ECEFF4',positive:'#A3BE8C',warning:'#EBCB8B',danger:'#BF616A'}),
+    tokyo: Object.assign({}, defaults, {name:'Tokyo Night',background:'#1A1B26',surface:'#16161E',surfaceAlt:'#24283B',text:'#C0CAF5',textMuted:'#9AA5CE',accent:'#7AA2F7',accentHover:'#BB9AF7',border:'#3B4261',headerBackground:'#101014',headerText:'#C0CAF5',positive:'#9ECE6A',warning:'#E0AF68',danger:'#F7768E'}),
+    gruvbox: Object.assign({}, defaults, {name:'Gruvbox Dark',background:'#282828',surface:'#32302F',surfaceAlt:'#3C3836',text:'#EBDBB2',textMuted:'#A89984',accent:'#FABD2F',accentHover:'#FE8019',border:'#504945',headerBackground:'#1D2021',headerText:'#FBF1C7',positive:'#B8BB26',warning:'#FABD2F',danger:'#FB4934'}),
+    solarized: Object.assign({}, defaults, {name:'Solarized Dark',background:'#002B36',surface:'#073642',surfaceAlt:'#0B4654',text:'#EEE8D5',textMuted:'#93A1A1',accent:'#2AA198',accentHover:'#268BD2',border:'#586E75',headerBackground:'#00212B',headerText:'#FDF6E3',positive:'#859900',warning:'#B58900',danger:'#DC322F'}),
+    arctic: Object.assign({}, defaults, {name:'Arctic Light',background:'#EDF2F7',surface:'#FFFFFF',surfaceAlt:'#E2E8F0',text:'#172033',textMuted:'#64748B',accent:'#E8590C',accentHover:'#FF7A2D',border:'#CBD5E1',headerBackground:'#FFFFFF',headerText:'#172033',positive:'#198754',warning:'#B7791F',danger:'#DC3545'})
   };
 
   function clone(value) { return JSON.parse(JSON.stringify(value)); }
@@ -164,15 +169,23 @@
     var gap = theme.density === 'compact' ? '6px' : '10px';
     return '/* UNRAID Theme Studio — ' + theme.name.replace(/[\r\n]/g,'') + ' */\nhtml:root[class*="Theme--"] {\n' +
       '  --text-color: ' + theme.text + ';\n  --alt-text-color: ' + theme.textMuted + ';\n' +
+      '  --disabled-text-color: ' + theme.textMuted + ';\n  --inverse-text-color: ' + theme.background + ';\n' +
       '  --link-text-color: ' + theme.accent + ';\n  --background-color: ' + theme.background + ';\n' +
-      '  --mild-background-color: ' + theme.surfaceAlt + ';\n  --dashboard-background-color: ' + theme.surface + ';\n' +
+      '  --mild-background-color: ' + theme.surfaceAlt + ';\n  --alt-background-color: ' + theme.surface + ';\n' +
+      '  --dashboard-background-color: ' + theme.surface + ';\n  --dashboard-title-action-color: ' + theme.textMuted + ';\n' +
       '  --border-color: ' + theme.border + ';\n  --table-border-color: ' + theme.border + ';\n' +
-      '  --table-background-color: ' + theme.surface + ';\n  --table-header-background-color: ' + theme.surfaceAlt + ';\n' +
+      '  --table-background-color: ' + theme.surface + ';\n  --table-header-background-color: ' + theme.surfaceAlt + ';\n  --hover-table-row-background-color: ' + theme.surfaceAlt + ';\n' +
       '  --header-text-color: ' + theme.headerText + ';\n  --header-background-color: ' + theme.headerBackground + ';\n' +
+      '  --hr-color: ' + theme.border + ';\n  --scrollbar-color: ' + theme.textMuted + ';\n  --scrollbar-hover-color: ' + theme.text + ';\n' +
       '  --brand-orange: ' + theme.accent + ';\n  --brand-red: ' + theme.danger + ';\n' +
       '  --theme-studio-positive: ' + theme.positive + ';\n  --theme-studio-warning: ' + theme.warning + ';\n' +
       '  --theme-studio-danger: ' + theme.danger + ';\n  --theme-studio-radius: ' + theme.radius + 'px;\n' +
-      '  --theme-studio-gap: ' + gap + ';\n}\n';
+      '  --theme-studio-gap: ' + gap + ';\n}\n\n' +
+      '.Theme--nav-top .nav-item a,\n.Theme--nav-top .nav-user a { color: var(--text-color); }\n' +
+      '.Theme--nav-top .nav-item:hover a,\n.Theme--nav-top .nav-item:focus-within a { color: var(--link-text-color); }\n' +
+      '.Theme--nav-top .nav-item:focus:after,\n.Theme--nav-top .nav-item:hover:after,\n.Theme--nav-top .nav-item.active:after { background-color: var(--brand-orange); }\n' +
+      '.Theme--sidebar .nav-item a { color: var(--alt-text-color); }\n' +
+      '.Theme--sidebar .nav-item:hover a,\n.Theme--sidebar .nav-item.active a { color: var(--text-color); }\n';
   }
 
   function download(filename, contents, type) {
