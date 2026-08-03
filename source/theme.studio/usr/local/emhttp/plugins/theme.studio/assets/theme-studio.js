@@ -169,18 +169,40 @@
     var gap = theme.density === 'compact' ? '6px' : '10px';
     return '/* UNRAID Theme Studio — ' + theme.name.replace(/[\r\n]/g,'') + ' */\nhtml:root[class*="Theme--"] {\n' +
       '  --text-color: ' + theme.text + ';\n  --alt-text-color: ' + theme.textMuted + ';\n' +
-      '  --disabled-text-color: ' + theme.textMuted + ';\n  --inverse-text-color: ' + theme.background + ';\n' +
+      '  --blockquote-text-color: ' + theme.textMuted + ';\n  --disabled-text-color: ' + theme.textMuted + ';\n  --inverse-text-color: ' + theme.background + ';\n' +
       '  --link-text-color: ' + theme.accent + ';\n  --background-color: ' + theme.background + ';\n' +
       '  --mild-background-color: ' + theme.surfaceAlt + ';\n  --alt-background-color: ' + theme.surface + ';\n' +
       '  --dashboard-background-color: ' + theme.surface + ';\n  --dashboard-title-action-color: ' + theme.textMuted + ';\n' +
-      '  --border-color: ' + theme.border + ';\n  --table-border-color: ' + theme.border + ';\n' +
+      '  --disabled-input-background-color: ' + theme.surfaceAlt + ';\n  --border-color: ' + theme.border + ';\n  --alt-border-color: ' + theme.border + ';\n' +
+      '  --disabled-border-color: ' + theme.border + ';\n  --inverse-border-color: ' + theme.border + ';\n  --table-border-color: ' + theme.border + ';\n  --table-alt-border-color: ' + theme.border + ';\n' +
       '  --table-background-color: ' + theme.surface + ';\n  --table-header-background-color: ' + theme.surfaceAlt + ';\n  --hover-table-row-background-color: ' + theme.surfaceAlt + ';\n' +
       '  --header-text-color: ' + theme.headerText + ';\n  --header-background-color: ' + theme.headerBackground + ';\n' +
-      '  --hr-color: ' + theme.border + ';\n  --scrollbar-color: ' + theme.textMuted + ';\n  --scrollbar-hover-color: ' + theme.text + ';\n' +
+      '  --dashboard-border-color: ' + theme.border + ';\n  --hr-color: ' + theme.border + ';\n  --scrollbar-color: ' + theme.textMuted + ';\n  --scrollbar-hover-color: ' + theme.text + ';\n' +
+      '  --checkbox-color: ' + theme.surfaceAlt + ';\n  --checkbox-hover-color: ' + theme.accent + ';\n' +
       '  --brand-orange: ' + theme.accent + ';\n  --brand-red: ' + theme.danger + ';\n' +
+      '  --focus-input-background-color: ' + theme.surfaceAlt + ';\n  --focus-input-border-color: ' + theme.accent + ';\n' +
+      '  --dynamix-ui-dropdownchecklist-color: ' + theme.text + ';\n  --dynamix-ui-dropdownchecklist-color-alt1: ' + theme.surface + ';\n  --dynamix-ui-dropdownchecklist-color-alt2: ' + theme.surfaceAlt + ';\n' +
+      '  --dynamix-ui-dropdownchecklist-dropcontainer-border-color: ' + theme.border + ';\n  --dynamix-ui-state-active-border-color: ' + theme.accent + ';\n' +
+      '  --dynamix-sb-message-bg-color: ' + theme.surface + ';\n  --dynamix-sb-message-text-color: ' + theme.text + ';\n  --dynamix-sb-message-link-color: ' + theme.accent + ';\n' +
+      '  --dynamix-sb-title-bg-color: ' + theme.surfaceAlt + ';\n  --dynamix-sb-title-text-color: ' + theme.text + ';\n' +
+      '  --dynamix-sb-wrapper-bg-color: ' + theme.surface + ';\n  --dynamix-sb-wrapper-border-color: ' + theme.border + ';\n  --dynamix-sb-wrapper-text-color: ' + theme.text + ';\n' +
+      '  --dynamix-sb-body-text-color: ' + theme.text + ';\n  --dynamix-sb-body-bg-color: ' + theme.surface + ';\n' +
+      '  --dynamix-sweet-alert-text-color: ' + theme.text + ';\n  --dynamix-sweet-alert-icon-bg-color: ' + theme.surface + ';\n' +
+      '  --dynamix-tablesorter-thead-row-border-color: ' + theme.border + ';\n  --dynamix-tablesorter-thead-th-text-color: ' + theme.text + ';\n  --dynamix-tablesorter-thead-th-bg-color: ' + theme.surfaceAlt + ';\n' +
+      '  --dynamix-tablesorter-tbody-row-bg-color: ' + theme.surface + ';\n  --dynamix-tablesorter-tbody-row-alt-bg-color: ' + theme.surfaceAlt + ';\n  --dynamix-tablesorter-tbody-row-border-color: ' + theme.border + ';\n' +
+      '  --dynamix-select-bg-color: ' + theme.surface + ';\n  --dynamix-select-box-shadow: 0 0 0 1px ' + theme.border + ';\n  --dynamix-select-disabled-bg-color: ' + theme.surfaceAlt + ';\n' +
+      '  --dynamix-select-disabled-border-color: ' + theme.border + ';\n  --dynamix-select-disabled-color: ' + theme.textMuted + ';\n  --dynamix-box-text-color: ' + theme.text + ';\n  --dynamix-box-inner-div-border-color: ' + theme.border + ';\n' +
+      '  --dynamix-tooltipster-sidetip-bg-from: ' + theme.surfaceAlt + ';\n  --dynamix-tooltipster-sidetip-bg-to: ' + theme.surface + ';\n  --dynamix-tooltipster-sidetip-content-text-color: ' + theme.text + ';\n' +
+      '  --dynamix-tooltipster-sidetip-arrow-bg-color: ' + theme.surface + ';\n  --dynamix-tooltipster-sidetip-arrow-border-color: ' + theme.border + ';\n  --dynamix-tooltipster-sidetip-box-border-color: ' + theme.accent + ';\n' +
+      '  --dynamix-filetree-bg-color: ' + theme.surface + ';\n  --dynamix-awesomplete-text-color: ' + theme.text + ';\n  --dynamix-awesomplete-list-bg-color: ' + theme.surface + ';\n' +
+      '  --dynamix-awesomplete-list-bg-from-color: ' + theme.surfaceAlt + ';\n  --dynamix-awesomplete-list-bg-to-color: ' + theme.surface + ';\n  --dynamix-awesomplete-list-border-color: ' + theme.border + ';\n' +
+      '  --dynamix-awesomplete-list-shadow-color: ' + theme.border + ';\n  --dynamix-awesomplete-list-before-bg-color: ' + theme.surface + ';\n  --dynamix-awesomplete-list-item-hover-bg-color: ' + theme.surfaceAlt + ';\n' +
+      '  --dynamix-awesomplete-list-item-hover-text-color: ' + theme.text + ';\n  --dynamix-awesomplete-list-item-selected-bg-color: ' + theme.accent + ';\n  --dynamix-awesomplete-list-item-selected-text-color: ' + theme.background + ';\n' +
+      '  --dynamix-awesomplete-mark-bg-color: ' + theme.warning + ';\n  --dynamix-awesomplete-mark-hover-bg-color: ' + theme.accentHover + ';\n  --dynamix-awesomplete-mark-selected-bg-color: ' + theme.positive + ';\n' +
       '  --theme-studio-positive: ' + theme.positive + ';\n  --theme-studio-warning: ' + theme.warning + ';\n' +
       '  --theme-studio-danger: ' + theme.danger + ';\n  --theme-studio-radius: ' + theme.radius + 'px;\n' +
       '  --theme-studio-gap: ' + gap + ';\n}\n\n' +
+      'table.tablesorter { background-color: var(--dynamix-tablesorter-tbody-row-bg-color); }\n' +
       '.Theme--nav-top .nav-item a,\n.Theme--nav-top .nav-user a { color: var(--text-color); }\n' +
       '.Theme--nav-top .nav-item:hover a,\n.Theme--nav-top .nav-item:focus-within a { color: var(--link-text-color); }\n' +
       '.Theme--nav-top .nav-item:focus:after,\n.Theme--nav-top .nav-item:hover:after,\n.Theme--nav-top .nav-item.active:after { background-color: var(--brand-orange); }\n' +

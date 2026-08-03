@@ -15,6 +15,7 @@ without editing CSS by hand.
 - Server-side validation and CSRF-protected saves
 - Persistent configuration at `/boot/config/plugins/theme.studio/`
 - A generated override stylesheet loaded after UNRAID's stock theme
+- Consistent Dynamix tables and components across Docker, Plugins, and third-party pages
 - Native Settings page and header shortcut; no Docker socket or extra port
 
 ## Try the editor locally

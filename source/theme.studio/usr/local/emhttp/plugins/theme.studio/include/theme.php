@@ -67,6 +67,7 @@ function theme_studio_css(array $theme): string
 html:root[class*="Theme--"] {
   --text-color: {$t['text']};
   --alt-text-color: {$t['textMuted']};
+  --blockquote-text-color: {$t['textMuted']};
   --disabled-text-color: {$t['textMuted']};
   --inverse-text-color: {$t['background']};
   --link-text-color: {$t['accent']};
@@ -82,15 +83,20 @@ html:root[class*="Theme--"] {
   --usage-disk-background-color: {$t['surfaceAlt']};
   --inverse-background-color: {$t['text']};
   --radio-background-color: {$t['surfaceAlt']};
+  --disabled-input-background-color: {$t['surfaceAlt']};
   --border-color: {$t['border']};
+  --alt-border-color: {$t['border']};
   --disabled-border-color: {$t['border']};
+  --inverse-border-color: {$t['border']};
   --input-border-color: {$t['border']};
   --disabled-input-border-color: {$t['border']};
   --textarea-border-color: {$t['border']};
   --table-border-color: {$t['border']};
+  --table-alt-border-color: {$t['border']};
   --table-background-color: {$t['surface']};
   --table-header-background-color: {$t['surfaceAlt']};
   --hover-table-row-background-color: {$t['surfaceAlt']};
+  --dashboard-border-color: {$t['border']};
   --footer-text: {$t['textMuted']};
   --footer-background-color: {$t['surfaceAlt']};
   --header-text-color: {$t['headerText']};
@@ -99,6 +105,8 @@ html:root[class*="Theme--"] {
   --hr-color: {$t['border']};
   --scrollbar-color: {$t['textMuted']};
   --scrollbar-hover-color: {$t['text']};
+  --checkbox-color: {$t['surfaceAlt']};
+  --checkbox-hover-color: {$t['accent']};
   --brand-orange: {$t['accent']};
   --brand-red: {$t['danger']};
   --button-text-color: {$t['accent']};
@@ -106,7 +114,60 @@ html:root[class*="Theme--"] {
   --hover-button-background: {$t['accentHover']};
   --input-bg-color: {$t['surface']};
   --focus-input-bg-color: {$t['surfaceAlt']};
+  --focus-input-background-color: {$t['surfaceAlt']};
+  --focus-input-border-color: {$t['accent']};
   --shade-bg-color: {$t['surfaceAlt']};
+  --dynamix-ui-dropdownchecklist-color: {$t['text']};
+  --dynamix-ui-dropdownchecklist-color-alt1: {$t['surface']};
+  --dynamix-ui-dropdownchecklist-color-alt2: {$t['surfaceAlt']};
+  --dynamix-ui-dropdownchecklist-dropcontainer-border-color: {$t['border']};
+  --dynamix-ui-state-active-border-color: {$t['accent']};
+  --dynamix-sb-message-bg-color: {$t['surface']};
+  --dynamix-sb-message-text-color: {$t['text']};
+  --dynamix-sb-message-link-color: {$t['accent']};
+  --dynamix-sb-title-bg-color: {$t['surfaceAlt']};
+  --dynamix-sb-title-text-color: {$t['text']};
+  --dynamix-sb-wrapper-bg-color: {$t['surface']};
+  --dynamix-sb-wrapper-border-color: {$t['border']};
+  --dynamix-sb-wrapper-text-color: {$t['text']};
+  --dynamix-sb-body-text-color: {$t['text']};
+  --dynamix-sb-body-bg-color: {$t['surface']};
+  --dynamix-sweet-alert-text-color: {$t['text']};
+  --dynamix-sweet-alert-icon-bg-color: {$t['surface']};
+  --dynamix-tablesorter-thead-row-border-color: {$t['border']};
+  --dynamix-tablesorter-thead-th-text-color: {$t['text']};
+  --dynamix-tablesorter-thead-th-bg-color: {$t['surfaceAlt']};
+  --dynamix-tablesorter-tbody-row-bg-color: {$t['surface']};
+  --dynamix-tablesorter-tbody-row-alt-bg-color: {$t['surfaceAlt']};
+  --dynamix-tablesorter-tbody-row-border-color: {$t['border']};
+  --dynamix-select-bg-color: {$t['surface']};
+  --dynamix-select-box-shadow: 0 0 0 1px {$t['border']};
+  --dynamix-select-disabled-bg-color: {$t['surfaceAlt']};
+  --dynamix-select-disabled-border-color: {$t['border']};
+  --dynamix-select-disabled-color: {$t['textMuted']};
+  --dynamix-box-text-color: {$t['text']};
+  --dynamix-box-inner-div-border-color: {$t['border']};
+  --dynamix-tooltipster-sidetip-bg-from: {$t['surfaceAlt']};
+  --dynamix-tooltipster-sidetip-bg-to: {$t['surface']};
+  --dynamix-tooltipster-sidetip-content-text-color: {$t['text']};
+  --dynamix-tooltipster-sidetip-arrow-bg-color: {$t['surface']};
+  --dynamix-tooltipster-sidetip-arrow-border-color: {$t['border']};
+  --dynamix-tooltipster-sidetip-box-border-color: {$t['accent']};
+  --dynamix-filetree-bg-color: {$t['surface']};
+  --dynamix-awesomplete-text-color: {$t['text']};
+  --dynamix-awesomplete-list-bg-color: {$t['surface']};
+  --dynamix-awesomplete-list-bg-from-color: {$t['surfaceAlt']};
+  --dynamix-awesomplete-list-bg-to-color: {$t['surface']};
+  --dynamix-awesomplete-list-border-color: {$t['border']};
+  --dynamix-awesomplete-list-shadow-color: {$t['border']};
+  --dynamix-awesomplete-list-before-bg-color: {$t['surface']};
+  --dynamix-awesomplete-list-item-hover-bg-color: {$t['surfaceAlt']};
+  --dynamix-awesomplete-list-item-hover-text-color: {$t['text']};
+  --dynamix-awesomplete-list-item-selected-bg-color: {$t['accent']};
+  --dynamix-awesomplete-list-item-selected-text-color: {$t['background']};
+  --dynamix-awesomplete-mark-bg-color: {$t['warning']};
+  --dynamix-awesomplete-mark-hover-bg-color: {$t['accentHover']};
+  --dynamix-awesomplete-mark-selected-bg-color: {$t['positive']};
   --theme-studio-positive: {$t['positive']};
   --theme-studio-warning: {$t['warning']};
   --theme-studio-danger: {$t['danger']};
@@ -116,6 +177,7 @@ html:root[class*="Theme--"] {
 
 body, #displaybox { background-color: var(--background-color); color: var(--text-color); }
 a, .fa-external-link { color: var(--link-text-color); }
+table.tablesorter { background-color: var(--dynamix-tablesorter-tbody-row-bg-color); }
 .Theme--nav-top .nav-item a,
 .Theme--nav-top .nav-user a { color: var(--text-color); }
 .Theme--nav-top .nav-item:hover a,
