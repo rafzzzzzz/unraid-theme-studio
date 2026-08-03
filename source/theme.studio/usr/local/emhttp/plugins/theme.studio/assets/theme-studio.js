@@ -36,6 +36,9 @@
     tokyo: Object.assign({}, defaults, {name:'Tokyo Night',background:'#1A1B26',surface:'#16161E',surfaceAlt:'#24283B',text:'#C0CAF5',textMuted:'#9AA5CE',accent:'#7AA2F7',accentHover:'#BB9AF7',border:'#3B4261',headerBackground:'#101014',headerText:'#C0CAF5',positive:'#9ECE6A',warning:'#E0AF68',danger:'#F7768E'}),
     gruvbox: Object.assign({}, defaults, {name:'Gruvbox Dark',background:'#282828',surface:'#32302F',surfaceAlt:'#3C3836',text:'#EBDBB2',textMuted:'#A89984',accent:'#FABD2F',accentHover:'#FE8019',border:'#504945',headerBackground:'#1D2021',headerText:'#FBF1C7',positive:'#B8BB26',warning:'#FABD2F',danger:'#FB4934'}),
     solarized: Object.assign({}, defaults, {name:'Solarized Dark',background:'#002B36',surface:'#073642',surfaceAlt:'#0B4654',text:'#EEE8D5',textMuted:'#93A1A1',accent:'#2AA198',accentHover:'#268BD2',border:'#586E75',headerBackground:'#00212B',headerText:'#FDF6E3',positive:'#859900',warning:'#B58900',danger:'#DC322F'}),
+    everforest: Object.assign({}, defaults, {name:'Everforest Dark',background:'#2D353B',surface:'#343F44',surfaceAlt:'#3D484D',text:'#D3C6AA',textMuted:'#859289',accent:'#A7C080',accentHover:'#83C092',border:'#4F585E',headerBackground:'#232A2E',headerText:'#D3C6AA',positive:'#A7C080',warning:'#DBBC7F',danger:'#E67E80'}),
+    rosepine: Object.assign({}, defaults, {name:'Rosé Pine',background:'#191724',surface:'#1F1D2E',surfaceAlt:'#26233A',text:'#E0DEF4',textMuted:'#908CAA',accent:'#C4A7E7',accentHover:'#EBBCBA',border:'#524F67',headerBackground:'#191724',headerText:'#E0DEF4',positive:'#31748F',warning:'#F6C177',danger:'#EB6F92'}),
+    plex: Object.assign({}, defaults, {name:'Plex Inspired',background:'#101010',surface:'#1F1F1F',surfaceAlt:'#282828',text:'#E5E5E5',textMuted:'#999999',accent:'#E5A00D',accentHover:'#F9BE03',border:'#3A3A3A',headerBackground:'#0B0B0B',headerText:'#FFFFFF',positive:'#21D07A',warning:'#E5A00D',danger:'#E05A5A'}),
     arctic: Object.assign({}, defaults, {name:'Arctic Light',background:'#EDF2F7',surface:'#FFFFFF',surfaceAlt:'#E2E8F0',text:'#172033',textMuted:'#64748B',accent:'#E8590C',accentHover:'#FF7A2D',border:'#CBD5E1',headerBackground:'#FFFFFF',headerText:'#172033',positive:'#198754',warning:'#B7791F',danger:'#DC3545'})
   };
 
@@ -203,6 +206,22 @@
       '  --theme-studio-danger: ' + theme.danger + ';\n  --theme-studio-radius: ' + theme.radius + 'px;\n' +
       '  --theme-studio-gap: ' + gap + ';\n}\n\n' +
       'table.tablesorter { background-color: var(--dynamix-tablesorter-tbody-row-bg-color); }\n' +
+      'html:root[class*="Theme--"] table.usb_mounts,\n' +
+      'html:root[class*="Theme--"] table.samba_mounts,\n' +
+      'html:root[class*="Theme--"] table.usb_absent,\n' +
+      'html:root[class*="Theme--"] table.preclear { background-color: var(--dynamix-tablesorter-tbody-row-bg-color); }\n' +
+      'html:root[class*="Theme--"] table.usb_mounts thead tr:first-child td,\n' +
+      'html:root[class*="Theme--"] table.samba_mounts thead tr:first-child td,\n' +
+      'html:root[class*="Theme--"] table.usb_absent thead tr:first-child td,\n' +
+      'html:root[class*="Theme--"] table.preclear thead tr:first-child td { background-color: var(--dynamix-tablesorter-thead-th-bg-color); }\n' +
+      'html:root[class*="Theme--"] table.usb_mounts tbody tr:nth-child(even),\n' +
+      'html:root[class*="Theme--"] table.samba_mounts tbody tr:nth-child(even),\n' +
+      'html:root[class*="Theme--"] table.usb_absent tbody tr:nth-child(even),\n' +
+      'html:root[class*="Theme--"] table.preclear tbody tr:nth-child(even) { background-color: var(--dynamix-tablesorter-tbody-row-alt-bg-color); }\n' +
+      'html:root[class*="Theme--"] table.usb_mounts tbody tr:not(.tr_last):hover > td,\n' +
+      'html:root[class*="Theme--"] table.samba_mounts tbody tr:not(.tr_last):hover > td,\n' +
+      'html:root[class*="Theme--"] table.usb_absent tbody tr:not(.tr_last):hover > td,\n' +
+      'html:root[class*="Theme--"] table.preclear tbody tr:not(.tr_last):hover > td { background-color: var(--hover-table-row-background-color); opacity: 1; }\n' +
       '.Theme--nav-top .nav-item a,\n.Theme--nav-top .nav-user a { color: var(--text-color); }\n' +
       '.Theme--nav-top .nav-item:hover a,\n.Theme--nav-top .nav-item:focus-within a { color: var(--link-text-color); }\n' +
       '.Theme--nav-top .nav-item:focus:after,\n.Theme--nav-top .nav-item:hover:after,\n.Theme--nav-top .nav-item.active:after { background-color: var(--brand-orange); }\n' +

@@ -178,6 +178,31 @@ html:root[class*="Theme--"] {
 body, #displaybox { background-color: var(--background-color); color: var(--text-color); }
 a, .fa-external-link { color: var(--link-text-color); }
 table.tablesorter { background-color: var(--dynamix-tablesorter-tbody-row-bg-color); }
+html:root[class*="Theme--"] table.usb_mounts,
+html:root[class*="Theme--"] table.samba_mounts,
+html:root[class*="Theme--"] table.usb_absent,
+html:root[class*="Theme--"] table.preclear {
+  background-color: var(--dynamix-tablesorter-tbody-row-bg-color);
+}
+html:root[class*="Theme--"] table.usb_mounts thead tr:first-child td,
+html:root[class*="Theme--"] table.samba_mounts thead tr:first-child td,
+html:root[class*="Theme--"] table.usb_absent thead tr:first-child td,
+html:root[class*="Theme--"] table.preclear thead tr:first-child td {
+  background-color: var(--dynamix-tablesorter-thead-th-bg-color);
+}
+html:root[class*="Theme--"] table.usb_mounts tbody tr:nth-child(even),
+html:root[class*="Theme--"] table.samba_mounts tbody tr:nth-child(even),
+html:root[class*="Theme--"] table.usb_absent tbody tr:nth-child(even),
+html:root[class*="Theme--"] table.preclear tbody tr:nth-child(even) {
+  background-color: var(--dynamix-tablesorter-tbody-row-alt-bg-color);
+}
+html:root[class*="Theme--"] table.usb_mounts tbody tr:not(.tr_last):hover > td,
+html:root[class*="Theme--"] table.samba_mounts tbody tr:not(.tr_last):hover > td,
+html:root[class*="Theme--"] table.usb_absent tbody tr:not(.tr_last):hover > td,
+html:root[class*="Theme--"] table.preclear tbody tr:not(.tr_last):hover > td {
+  background-color: var(--hover-table-row-background-color);
+  opacity: 1;
+}
 .Theme--nav-top .nav-item a,
 .Theme--nav-top .nav-user a { color: var(--text-color); }
 .Theme--nav-top .nav-item:hover a,

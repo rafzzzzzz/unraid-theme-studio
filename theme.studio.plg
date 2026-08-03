@@ -2,8 +2,8 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "theme.studio">
 <!ENTITY author    "Rafael Marques">
-<!ENTITY version   "2026.08.03.5">
-<!ENTITY md5       "848d084a179c197fbdacfd1544e787e3">
+<!ENTITY version   "2026.08.03.6">
+<!ENTITY md5       "2821035df3d8b69e67b17c132958765e">
 <!ENTITY github    "rafzzzzzz/unraid-theme-studio">
 <!ENTITY branch    "main">
 <!ENTITY launch    "Settings/UserPreferences/ThemeStudio">
@@ -14,6 +14,8 @@
 
 <CHANGES>
 ### &version;
+- Override Unassigned Devices and Preclear hardcoded table colors.
+- Add Everforest, Rosé Pine, and Plex Inspired presets.
 - Theme Dynamix tables, alternating rows, plugin lists, dropdowns, tooltips, and file trees.
 - Remove stock #212121 table-row fallbacks from Docker, Plugins, and third-party pages.
 - Fix stale browser caching that made new presets fall back to Midnight.

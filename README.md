@@ -10,8 +10,9 @@ without editing CSS by hand.
 - Color controls for the page, panels, text, secondary text, borders, header,
   links/accent, success, warning, and danger states
 - Corner-radius and density controls
-- Nine built-in presets—including Dracula, Catppuccin Mocha, Oblivion, Nord,
-  Tokyo Night, Gruvbox, and Solarized—plus undo/redo, JSON import/export, and CSS export
+- Twelve built-in presets—including Dracula, Catppuccin Mocha, Oblivion, Nord,
+  Tokyo Night, Gruvbox, Solarized, Everforest, Rosé Pine, and Plex Inspired—plus
+  undo/redo, JSON import/export, and CSS export
 - Server-side validation and CSRF-protected saves
 - Persistent configuration at `/boot/config/plugins/theme.studio/`
 - A generated override stylesheet loaded after UNRAID's stock theme

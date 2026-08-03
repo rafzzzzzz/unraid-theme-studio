@@ -37,6 +37,9 @@ $themeStudioAssetVersion = (string)@filemtime("$docroot/plugins/theme.studio/ass
         <button type="button" data-preset="tokyo"><span style="--swatch:#7AA2F7"></span>Tokyo Night</button>
         <button type="button" data-preset="gruvbox"><span style="--swatch:#FABD2F"></span>Gruvbox</button>
         <button type="button" data-preset="solarized"><span style="--swatch:#2AA198"></span>Solarized</button>
+        <button type="button" data-preset="everforest"><span style="--swatch:#A7C080"></span>Everforest</button>
+        <button type="button" data-preset="rosepine"><span style="--swatch:#C4A7E7"></span>Rosé Pine</button>
+        <button type="button" data-preset="plex"><span style="--swatch:#E5A00D"></span>Plex</button>
         <button type="button" data-preset="arctic"><span style="--swatch:#edf2f7"></span>Arctic</button>
       </div>
 
