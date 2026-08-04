@@ -52,6 +52,7 @@ $themeStudioAssetVersion = (string)@filemtime("$docroot/plugins/theme.studio/ass
       <nav class="ts-tabs" aria-label="Editor sections">
         <button type="button" class="is-active" data-tab="colors">Colors</button>
         <button type="button" data-tab="surface">Surface</button>
+        <button type="button" data-tab="advanced">Advanced</button>
       </nav>
 
       <section class="ts-panel is-active" data-panel="colors">
@@ -72,6 +73,33 @@ $themeStudioAssetVersion = (string)@filemtime("$docroot/plugins/theme.studio/ass
           <div><strong>Text contrast</strong><small id="ts-contrast-copy">Checking…</small></div>
           <span id="ts-contrast-badge" class="ts-badge">—</span>
         </div>
+      </section>
+
+      <section class="ts-panel" data-panel="advanced">
+        <div class="ts-section-heading">
+          <span class="ts-section-icon"><i class="fa fa-magic"></i></span>
+          <div><strong>Effects</strong><small>Add depth and movement without changing your palette</small></div>
+        </div>
+        <label class="ts-range-label"><span>Panel transparency <output id="ts-transparency-output"></output></span>
+          <input id="ts-transparency" type="range" min="0" max="60" step="1">
+          <small>0% is fully opaque; higher values reveal the page gradient.</small>
+        </label>
+        <label class="ts-range-label"><span>Gradient strength <output id="ts-gradient-output"></output></span>
+          <input id="ts-gradient-strength" type="range" min="0" max="100" step="1">
+          <small>Blends the accent colors into the page background.</small>
+        </label>
+        <label class="ts-range-label"><span>Accent glow <output id="ts-glow-output"></output></span>
+          <input id="ts-glow-strength" type="range" min="0" max="30" step="1">
+          <small>Adds a soft accent glow to active and focused elements.</small>
+        </label>
+        <label class="ts-effect-toggle">
+          <input id="ts-animated-background" type="checkbox">
+          <span><strong>Animated background</strong><small>Slowly moves the gradient and respects reduced-motion settings.</small></span>
+        </label>
+        <label class="ts-range-label ts-animation-speed"><span>Animation duration <output id="ts-animation-speed-output"></output></span>
+          <input id="ts-animation-speed" type="range" min="10" max="120" step="5">
+          <small>Longer durations create slower, calmer movement.</small>
+        </label>
       </section>
 
       <footer class="ts-tools">

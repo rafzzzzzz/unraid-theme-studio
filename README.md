@@ -12,6 +12,8 @@ without editing CSS by hand.
 - Corner-radius and density controls
 - Master enable/disable switch that preserves the saved palette while removing
   all generated Theme Studio overrides
+- Advanced effects for panel transparency, accent gradients and glow, plus an
+  optional reduced-motion-aware animated background
 - Twelve built-in presets—including Dracula, Catppuccin Mocha, Oblivion, Nord,
   Tokyo Night, Gruvbox, Solarized, Everforest, Rosé Pine, and Plex Inspired—plus
   undo/redo, JSON import/export, and CSS export

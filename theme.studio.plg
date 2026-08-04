@@ -2,8 +2,8 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "theme.studio">
 <!ENTITY author    "Rafael Marques">
-<!ENTITY version   "2026.08.03.7">
-<!ENTITY md5       "0bb670486b8505c68b7f540da2162a7f">
+<!ENTITY version   "2026.08.04.1">
+<!ENTITY md5       "c804d2ee6588be33f870ad03bc2ac1ae">
 <!ENTITY github    "rafzzzzzz/unraid-theme-studio">
 <!ENTITY branch    "main">
 <!ENTITY launch    "Settings/UserPreferences/ThemeStudio">
@@ -14,6 +14,7 @@
 
 <CHANGES>
 ### &version;
+- Add Advanced effects for transparency, gradients, glow, and animated backgrounds.
 - Add a master enable/disable switch without deleting saved theme settings.
 - Override Unassigned Devices and Preclear hardcoded table colors.
 - Add Everforest, Rosé Pine, and Plex Inspired presets.

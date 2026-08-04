@@ -46,6 +46,14 @@
   function query(selector) { return root.querySelector(selector); }
   function queryAll(selector) { return Array.prototype.slice.call(root.querySelectorAll(selector)); }
   function validHex(value) { return /^#[0-9A-F]{6}$/i.test(value); }
+  function clampNumber(value, minimum, maximum, fallback) {
+    var number = Number(value);
+    return Number.isFinite(number) ? Math.max(minimum, Math.min(maximum, number)) : fallback;
+  }
+  function hexToRgba(hex, alpha) {
+    var value = hex.replace('#', '');
+    return 'rgba(' + parseInt(value.substr(0,2),16) + ',' + parseInt(value.substr(2,2),16) + ',' + parseInt(value.substr(4,2),16) + ',' + Math.max(0,Math.min(1,alpha)).toFixed(3) + ')';
+  }
 
   function buildColorControls() {
     var host = query('#ts-color-controls');
@@ -65,6 +73,17 @@
     query('#ts-theme-name').value = state.name;
     query('#ts-radius').value = state.radius;
     query('#ts-radius-output').textContent = state.radius + ' px';
+    query('#ts-transparency').value = state.transparency;
+    query('#ts-transparency-output').textContent = state.transparency + '%';
+    query('#ts-gradient-strength').value = state.gradientStrength;
+    query('#ts-gradient-output').textContent = state.gradientStrength + '%';
+    query('#ts-glow-strength').value = state.glowStrength;
+    query('#ts-glow-output').textContent = state.glowStrength === 0 ? 'Off' : state.glowStrength + ' px';
+    query('#ts-animated-background').checked = state.animatedBackground === true;
+    query('#ts-animation-speed').value = state.animationSpeed;
+    query('#ts-animation-speed-output').textContent = state.animationSpeed + ' sec';
+    query('#ts-animation-speed').disabled = state.animatedBackground !== true;
+    query('.ts-animation-speed').classList.toggle('is-disabled', state.animatedBackground !== true);
     queryAll('input[name="ts-density"]').forEach(function (input) { input.checked = input.value === state.density; });
     queryAll('.ts-color-row').forEach(function (row) {
       var value = state[row.dataset.key];
@@ -88,9 +107,19 @@
   function updatePreview() {
     var preview = query('#ts-dashboard-preview');
     var map = {
-      background:'--p-bg',surface:'--p-surface',surfaceAlt:'--p-surface-alt',text:'--p-text',textMuted:'--p-muted',accent:'--p-accent',accentHover:'--p-accent-hover',border:'--p-border',headerBackground:'--p-header',headerText:'--p-header-text',positive:'--p-good',warning:'--p-warn',danger:'--p-danger'
+      background:'--p-bg',text:'--p-text',textMuted:'--p-muted',accent:'--p-accent',accentHover:'--p-accent-hover',border:'--p-border',headerBackground:'--p-header',headerText:'--p-header-text',positive:'--p-good',warning:'--p-warn',danger:'--p-danger'
     };
     Object.keys(map).forEach(function (key) { preview.style.setProperty(map[key], state[key]); });
+    var panelOpacity = 1 - (state.transparency / 100);
+    var gradientPrimary = hexToRgba(state.accent, (state.gradientStrength / 100) * 0.36);
+    var gradientSecondary = hexToRgba(state.accentHover, (state.gradientStrength / 100) * 0.24);
+    preview.style.setProperty('--p-surface', hexToRgba(state.surface, panelOpacity));
+    preview.style.setProperty('--p-surface-alt', hexToRgba(state.surfaceAlt, panelOpacity));
+    preview.style.setProperty('--p-glow', state.glowStrength > 0 ? '0 0 ' + state.glowStrength + 'px ' + hexToRgba(state.accent, Math.min(0.75, 0.25 + state.glowStrength / 60)) : 'none');
+    preview.style.backgroundImage = 'radial-gradient(circle at 12% 8%,' + gradientPrimary + ' 0,transparent 34%),radial-gradient(circle at 88% 18%,' + gradientSecondary + ' 0,transparent 38%)';
+    preview.style.backgroundSize = '145% 145%,165% 165%';
+    preview.style.animationDuration = state.animationSpeed + 's';
+    preview.classList.toggle('is-effects-animated', state.animatedBackground === true && state.gradientStrength > 0);
     preview.style.setProperty('--p-radius', state.radius + 'px');
     preview.style.setProperty('--p-gap', state.density === 'compact' ? '8px' : '14px');
     updateContrast();
@@ -186,41 +215,57 @@
 
   function cssForTheme(theme) {
     var gap = theme.density === 'compact' ? '6px' : '10px';
+    var transparency = Math.max(0, Math.min(60, Number(theme.transparency) || 0));
+    var gradientStrength = Math.max(0, Math.min(100, Number(theme.gradientStrength) || 0));
+    var glowStrength = Math.max(0, Math.min(30, Number(theme.glowStrength) || 0));
+    var panelSurface = hexToRgba(theme.surface, 1 - transparency / 100);
+    var raisedSurface = hexToRgba(theme.surfaceAlt, 1 - transparency / 100);
+    var gradientPrimary = hexToRgba(theme.accent, gradientStrength / 100 * 0.36);
+    var gradientSecondary = hexToRgba(theme.accentHover, gradientStrength / 100 * 0.24);
+    var glow = glowStrength > 0 ? '0 0 ' + glowStrength + 'px ' + hexToRgba(theme.accent, Math.min(0.75, 0.25 + glowStrength / 60)) : 'none';
+    var animation = theme.animatedBackground === true && gradientStrength > 0
+      ? 'animation:theme-studio-background ' + Math.max(10,Math.min(120,Number(theme.animationSpeed)||40)) + 's ease-in-out infinite alternate;'
+      : '';
     return '/* UNRAID Theme Studio — ' + theme.name.replace(/[\r\n]/g,'') + ' */\nhtml:root[class*="Theme--"] {\n' +
       '  --text-color: ' + theme.text + ';\n  --alt-text-color: ' + theme.textMuted + ';\n' +
       '  --blockquote-text-color: ' + theme.textMuted + ';\n  --disabled-text-color: ' + theme.textMuted + ';\n  --inverse-text-color: ' + theme.background + ';\n' +
       '  --link-text-color: ' + theme.accent + ';\n  --background-color: ' + theme.background + ';\n' +
-      '  --mild-background-color: ' + theme.surfaceAlt + ';\n  --alt-background-color: ' + theme.surface + ';\n' +
-      '  --dashboard-background-color: ' + theme.surface + ';\n  --dashboard-title-action-color: ' + theme.textMuted + ';\n' +
-      '  --disabled-input-background-color: ' + theme.surfaceAlt + ';\n  --border-color: ' + theme.border + ';\n  --alt-border-color: ' + theme.border + ';\n' +
+      '  --mild-background-color: ' + raisedSurface + ';\n  --alt-background-color: ' + panelSurface + ';\n' +
+      '  --dashboard-background-color: ' + panelSurface + ';\n  --dashboard-title-action-color: ' + theme.textMuted + ';\n' +
+      '  --disabled-input-background-color: ' + raisedSurface + ';\n  --border-color: ' + theme.border + ';\n  --alt-border-color: ' + theme.border + ';\n' +
       '  --disabled-border-color: ' + theme.border + ';\n  --inverse-border-color: ' + theme.border + ';\n  --table-border-color: ' + theme.border + ';\n  --table-alt-border-color: ' + theme.border + ';\n' +
-      '  --table-background-color: ' + theme.surface + ';\n  --table-header-background-color: ' + theme.surfaceAlt + ';\n  --hover-table-row-background-color: ' + theme.surfaceAlt + ';\n' +
+      '  --table-background-color: ' + panelSurface + ';\n  --table-header-background-color: ' + raisedSurface + ';\n  --hover-table-row-background-color: ' + raisedSurface + ';\n' +
       '  --header-text-color: ' + theme.headerText + ';\n  --header-background-color: ' + theme.headerBackground + ';\n' +
       '  --dashboard-border-color: ' + theme.border + ';\n  --hr-color: ' + theme.border + ';\n  --scrollbar-color: ' + theme.textMuted + ';\n  --scrollbar-hover-color: ' + theme.text + ';\n' +
       '  --checkbox-color: ' + theme.surfaceAlt + ';\n  --checkbox-hover-color: ' + theme.accent + ';\n' +
       '  --brand-orange: ' + theme.accent + ';\n  --brand-red: ' + theme.danger + ';\n' +
-      '  --focus-input-background-color: ' + theme.surfaceAlt + ';\n  --focus-input-border-color: ' + theme.accent + ';\n' +
-      '  --dynamix-ui-dropdownchecklist-color: ' + theme.text + ';\n  --dynamix-ui-dropdownchecklist-color-alt1: ' + theme.surface + ';\n  --dynamix-ui-dropdownchecklist-color-alt2: ' + theme.surfaceAlt + ';\n' +
+      '  --focus-input-background-color: ' + raisedSurface + ';\n  --focus-input-border-color: ' + theme.accent + ';\n' +
+      '  --dynamix-ui-dropdownchecklist-color: ' + theme.text + ';\n  --dynamix-ui-dropdownchecklist-color-alt1: ' + panelSurface + ';\n  --dynamix-ui-dropdownchecklist-color-alt2: ' + raisedSurface + ';\n' +
       '  --dynamix-ui-dropdownchecklist-dropcontainer-border-color: ' + theme.border + ';\n  --dynamix-ui-state-active-border-color: ' + theme.accent + ';\n' +
-      '  --dynamix-sb-message-bg-color: ' + theme.surface + ';\n  --dynamix-sb-message-text-color: ' + theme.text + ';\n  --dynamix-sb-message-link-color: ' + theme.accent + ';\n' +
-      '  --dynamix-sb-title-bg-color: ' + theme.surfaceAlt + ';\n  --dynamix-sb-title-text-color: ' + theme.text + ';\n' +
-      '  --dynamix-sb-wrapper-bg-color: ' + theme.surface + ';\n  --dynamix-sb-wrapper-border-color: ' + theme.border + ';\n  --dynamix-sb-wrapper-text-color: ' + theme.text + ';\n' +
-      '  --dynamix-sb-body-text-color: ' + theme.text + ';\n  --dynamix-sb-body-bg-color: ' + theme.surface + ';\n' +
-      '  --dynamix-sweet-alert-text-color: ' + theme.text + ';\n  --dynamix-sweet-alert-icon-bg-color: ' + theme.surface + ';\n' +
-      '  --dynamix-tablesorter-thead-row-border-color: ' + theme.border + ';\n  --dynamix-tablesorter-thead-th-text-color: ' + theme.text + ';\n  --dynamix-tablesorter-thead-th-bg-color: ' + theme.surfaceAlt + ';\n' +
-      '  --dynamix-tablesorter-tbody-row-bg-color: ' + theme.surface + ';\n  --dynamix-tablesorter-tbody-row-alt-bg-color: ' + theme.surfaceAlt + ';\n  --dynamix-tablesorter-tbody-row-border-color: ' + theme.border + ';\n' +
-      '  --dynamix-select-bg-color: ' + theme.surface + ';\n  --dynamix-select-box-shadow: 0 0 0 1px ' + theme.border + ';\n  --dynamix-select-disabled-bg-color: ' + theme.surfaceAlt + ';\n' +
+      '  --dynamix-sb-message-bg-color: ' + panelSurface + ';\n  --dynamix-sb-message-text-color: ' + theme.text + ';\n  --dynamix-sb-message-link-color: ' + theme.accent + ';\n' +
+      '  --dynamix-sb-title-bg-color: ' + raisedSurface + ';\n  --dynamix-sb-title-text-color: ' + theme.text + ';\n' +
+      '  --dynamix-sb-wrapper-bg-color: ' + panelSurface + ';\n  --dynamix-sb-wrapper-border-color: ' + theme.border + ';\n  --dynamix-sb-wrapper-text-color: ' + theme.text + ';\n' +
+      '  --dynamix-sb-body-text-color: ' + theme.text + ';\n  --dynamix-sb-body-bg-color: ' + panelSurface + ';\n' +
+      '  --dynamix-sweet-alert-text-color: ' + theme.text + ';\n  --dynamix-sweet-alert-icon-bg-color: ' + panelSurface + ';\n' +
+      '  --dynamix-tablesorter-thead-row-border-color: ' + theme.border + ';\n  --dynamix-tablesorter-thead-th-text-color: ' + theme.text + ';\n  --dynamix-tablesorter-thead-th-bg-color: ' + raisedSurface + ';\n' +
+      '  --dynamix-tablesorter-tbody-row-bg-color: ' + panelSurface + ';\n  --dynamix-tablesorter-tbody-row-alt-bg-color: ' + raisedSurface + ';\n  --dynamix-tablesorter-tbody-row-border-color: ' + theme.border + ';\n' +
+      '  --dynamix-select-bg-color: ' + panelSurface + ';\n  --dynamix-select-box-shadow: 0 0 0 1px ' + theme.border + ';\n  --dynamix-select-disabled-bg-color: ' + raisedSurface + ';\n' +
       '  --dynamix-select-disabled-border-color: ' + theme.border + ';\n  --dynamix-select-disabled-color: ' + theme.textMuted + ';\n  --dynamix-box-text-color: ' + theme.text + ';\n  --dynamix-box-inner-div-border-color: ' + theme.border + ';\n' +
-      '  --dynamix-tooltipster-sidetip-bg-from: ' + theme.surfaceAlt + ';\n  --dynamix-tooltipster-sidetip-bg-to: ' + theme.surface + ';\n  --dynamix-tooltipster-sidetip-content-text-color: ' + theme.text + ';\n' +
-      '  --dynamix-tooltipster-sidetip-arrow-bg-color: ' + theme.surface + ';\n  --dynamix-tooltipster-sidetip-arrow-border-color: ' + theme.border + ';\n  --dynamix-tooltipster-sidetip-box-border-color: ' + theme.accent + ';\n' +
-      '  --dynamix-filetree-bg-color: ' + theme.surface + ';\n  --dynamix-awesomplete-text-color: ' + theme.text + ';\n  --dynamix-awesomplete-list-bg-color: ' + theme.surface + ';\n' +
-      '  --dynamix-awesomplete-list-bg-from-color: ' + theme.surfaceAlt + ';\n  --dynamix-awesomplete-list-bg-to-color: ' + theme.surface + ';\n  --dynamix-awesomplete-list-border-color: ' + theme.border + ';\n' +
-      '  --dynamix-awesomplete-list-shadow-color: ' + theme.border + ';\n  --dynamix-awesomplete-list-before-bg-color: ' + theme.surface + ';\n  --dynamix-awesomplete-list-item-hover-bg-color: ' + theme.surfaceAlt + ';\n' +
+      '  --dynamix-tooltipster-sidetip-bg-from: ' + raisedSurface + ';\n  --dynamix-tooltipster-sidetip-bg-to: ' + panelSurface + ';\n  --dynamix-tooltipster-sidetip-content-text-color: ' + theme.text + ';\n' +
+      '  --dynamix-tooltipster-sidetip-arrow-bg-color: ' + panelSurface + ';\n  --dynamix-tooltipster-sidetip-arrow-border-color: ' + theme.border + ';\n  --dynamix-tooltipster-sidetip-box-border-color: ' + theme.accent + ';\n' +
+      '  --dynamix-filetree-bg-color: ' + panelSurface + ';\n  --dynamix-awesomplete-text-color: ' + theme.text + ';\n  --dynamix-awesomplete-list-bg-color: ' + panelSurface + ';\n' +
+      '  --dynamix-awesomplete-list-bg-from-color: ' + raisedSurface + ';\n  --dynamix-awesomplete-list-bg-to-color: ' + panelSurface + ';\n  --dynamix-awesomplete-list-border-color: ' + theme.border + ';\n' +
+      '  --dynamix-awesomplete-list-shadow-color: ' + theme.border + ';\n  --dynamix-awesomplete-list-before-bg-color: ' + panelSurface + ';\n  --dynamix-awesomplete-list-item-hover-bg-color: ' + raisedSurface + ';\n' +
       '  --dynamix-awesomplete-list-item-hover-text-color: ' + theme.text + ';\n  --dynamix-awesomplete-list-item-selected-bg-color: ' + theme.accent + ';\n  --dynamix-awesomplete-list-item-selected-text-color: ' + theme.background + ';\n' +
       '  --dynamix-awesomplete-mark-bg-color: ' + theme.warning + ';\n  --dynamix-awesomplete-mark-hover-bg-color: ' + theme.accentHover + ';\n  --dynamix-awesomplete-mark-selected-bg-color: ' + theme.positive + ';\n' +
       '  --theme-studio-positive: ' + theme.positive + ';\n  --theme-studio-warning: ' + theme.warning + ';\n' +
       '  --theme-studio-danger: ' + theme.danger + ';\n  --theme-studio-radius: ' + theme.radius + 'px;\n' +
-      '  --theme-studio-gap: ' + gap + ';\n}\n\n' +
+      '  --theme-studio-gap: ' + gap + ';\n  --theme-studio-panel: ' + panelSurface + ';\n  --theme-studio-panel-raised: ' + raisedSurface + ';\n  --theme-studio-glow: ' + glow + ';\n}\n\n' +
+      'body,#displaybox{background-color:' + theme.background + ';background-image:radial-gradient(circle at 12% 8%,' + gradientPrimary + ' 0,transparent 34%),radial-gradient(circle at 88% 18%,' + gradientSecondary + ' 0,transparent 38%);background-attachment:fixed;background-position:0% 0%,100% 0%;background-repeat:no-repeat;background-size:145% 145%,165% 165%;' + animation + '}\n' +
+      '.dashboard .box,.dashboard-card,.tile,.ui-dialog,.sweet-alert,.context-menu-list{background-color:var(--theme-studio-panel);}\n' +
+      '.dashboard .box:hover,.dashboard-card:hover,.tile:hover,input:focus,select:focus,textarea:focus,.Theme--nav-top .nav-item.active:after{box-shadow:var(--theme-studio-glow);}\n' +
+      '@keyframes theme-studio-background{from{background-position:0% 0%,100% 0%}to{background-position:28% 18%,72% 30%}}\n' +
+      '@media (prefers-reduced-motion:reduce){body,#displaybox{animation:none}}\n\n' +
       'table.tablesorter { background-color: var(--dynamix-tablesorter-tbody-row-bg-color); }\n' +
       'html:root[class*="Theme--"] table.usb_mounts,\n' +
       'html:root[class*="Theme--"] table.samba_mounts,\n' +
@@ -263,6 +308,11 @@
     });
     query('#ts-theme-name').addEventListener('input', function (event) { state.name = event.target.value; scheduleHistory(); });
     query('#ts-radius').addEventListener('input', function (event) { state.radius = Number(event.target.value); query('#ts-radius-output').textContent = state.radius + ' px'; updatePreview(); scheduleHistory(); });
+    query('#ts-transparency').addEventListener('input', function (event) { state.transparency = Number(event.target.value); query('#ts-transparency-output').textContent = state.transparency + '%'; updatePreview(); scheduleHistory(); });
+    query('#ts-gradient-strength').addEventListener('input', function (event) { state.gradientStrength = Number(event.target.value); query('#ts-gradient-output').textContent = state.gradientStrength + '%'; updatePreview(); scheduleHistory(); });
+    query('#ts-glow-strength').addEventListener('input', function (event) { state.glowStrength = Number(event.target.value); query('#ts-glow-output').textContent = state.glowStrength === 0 ? 'Off' : state.glowStrength + ' px'; updatePreview(); scheduleHistory(); });
+    query('#ts-animated-background').addEventListener('change', function (event) { state.animatedBackground = event.target.checked; query('#ts-animation-speed').disabled = !state.animatedBackground; query('.ts-animation-speed').classList.toggle('is-disabled', !state.animatedBackground); updatePreview(); scheduleHistory(); });
+    query('#ts-animation-speed').addEventListener('input', function (event) { state.animationSpeed = Number(event.target.value); query('#ts-animation-speed-output').textContent = state.animationSpeed + ' sec'; updatePreview(); scheduleHistory(); });
     queryAll('input[name="ts-density"]').forEach(function (input) { input.addEventListener('change', function () { if (input.checked) { state.density = input.value; updatePreview(); scheduleHistory(); } }); });
 
     queryAll('.ts-color-row').forEach(function (row) {
@@ -282,7 +332,14 @@
           toast('Preset unavailable — refresh this page and try again', true);
           return;
         }
-        setState(Object.assign({}, preset, {enabled: state.enabled !== false}));
+        setState(Object.assign({}, preset, {
+          enabled: state.enabled !== false,
+          transparency: state.transparency,
+          gradientStrength: state.gradientStrength,
+          glowStrength: state.glowStrength,
+          animatedBackground: state.animatedBackground,
+          animationSpeed: state.animationSpeed
+        }));
         queryAll('[data-preset]').forEach(function (item) {
           var selected = item === button;
           item.classList.toggle('is-active', selected);
@@ -302,7 +359,18 @@
     query('[data-action="import"]').addEventListener('click', function () { query('#ts-import-file').click(); });
     query('#ts-import-file').addEventListener('change', function (event) {
       var file = event.target.files[0]; if (!file) return;
-      file.text().then(function (text) { var incoming = JSON.parse(text); colorFields.forEach(function (field) { if (!validHex(incoming[field[0]])) throw new Error('Invalid ' + field[1] + ' color'); }); setState(Object.assign({}, defaults, incoming)); toast('Theme imported — review and apply'); }).catch(function (error) { toast('Import failed: ' + error.message, true); }).finally(function () { event.target.value = ''; });
+      file.text().then(function (text) {
+        var incoming = Object.assign({}, defaults, JSON.parse(text));
+        colorFields.forEach(function (field) { if (!validHex(incoming[field[0]])) throw new Error('Invalid ' + field[1] + ' color'); });
+        incoming.enabled = incoming.enabled !== false;
+        incoming.transparency = clampNumber(incoming.transparency, 0, 60, defaults.transparency);
+        incoming.gradientStrength = clampNumber(incoming.gradientStrength, 0, 100, defaults.gradientStrength);
+        incoming.glowStrength = clampNumber(incoming.glowStrength, 0, 30, defaults.glowStrength);
+        incoming.animatedBackground = incoming.animatedBackground === true;
+        incoming.animationSpeed = clampNumber(incoming.animationSpeed, 10, 120, defaults.animationSpeed);
+        setState(incoming);
+        toast('Theme imported — review and apply');
+      }).catch(function (error) { toast('Import failed: ' + error.message, true); }).finally(function () { event.target.value = ''; });
     });
   }
 
