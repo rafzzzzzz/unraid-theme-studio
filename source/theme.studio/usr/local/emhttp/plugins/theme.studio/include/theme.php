@@ -242,6 +242,25 @@ body {
   background-color: transparent;
   background-image: none;
 }
+#header .logo:not(:has(.partner-logo)) svg {
+  display: none !important;
+}
+#header .logo:not(:has(.partner-logo)) > a::before,
+#header .logo:not(:has(.partner-logo)):not(:has(> a))::before {
+  content: "UNRAID";
+  display: block;
+  box-sizing: border-box;
+  width: 160px;
+  margin: 19px 0 5px;
+  color: var(--brand-orange);
+  font-family: clear-sans, sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 39px;
+  letter-spacing: .18em;
+  text-align: center;
+  text-indent: .18em;
+}
 a, .fa-external-link { color: var(--link-text-color); }
 table.tablesorter { background-color: var(--dynamix-tablesorter-tbody-row-bg-color); }
 html:root[class*="Theme--"] table.usb_mounts,
@@ -313,6 +332,13 @@ table.dashboard > tbody > tr:first-child > td:first-child { border-top-left-radi
 table.dashboard > tbody > tr:first-child > td:last-child { border-top-right-radius: var(--theme-studio-radius); }
 table.dashboard > tbody > tr:last-child > td:first-child { border-bottom-left-radius: var(--theme-studio-radius); }
 table.dashboard > tbody > tr:last-child > td:last-child { border-bottom-right-radius: var(--theme-studio-radius); }
+table.dashboard > thead.stopgap,
+table.dashboard > thead.stopgap > tr,
+table.dashboard td.stopgap {
+  background-color: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
 table.tablesorter, table.disk_status, table.share_status,
 table.usb_mounts, table.samba_mounts, table.usb_absent, table.preclear {
   overflow: hidden;

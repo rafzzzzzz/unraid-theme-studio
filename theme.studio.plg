@@ -2,8 +2,8 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "theme.studio">
 <!ENTITY author    "Rafael Marques">
-<!ENTITY version   "2026.08.04.4">
-<!ENTITY md5       "f31815cc2ce343c10caa801c19b447fb">
+<!ENTITY version   "2026.08.05.1">
+<!ENTITY md5       "565dca1722abc002d8a06a13f6f15fa4">
 <!ENTITY github    "rafzzzzzz/unraid-theme-studio">
 <!ENTITY branch    "main">
 <!ENTITY launch    "Settings/UserPreferences/ThemeStudio">
@@ -14,6 +14,9 @@
 
 <CHANGES>
 ### &version;
+- Match the Oblivion Dark preset to its published navy, blue, and green palette.
+- Replace the stock Unraid header SVG with accent-colored text while preserving partner logos.
+- Make the injected dashboard section spacers fully transparent.
 - Finish dashboard section rounding by moving square row-group borders onto corner cells.
 - Add a native monochrome paint-brush icon to the Settings page.
 - Enlarge and recenter animated gradient layers to keep their edges off ultrawide screens.

@@ -14,6 +14,9 @@
 
 <CHANGES>
 ### &version;
+- Match the Oblivion Dark preset to its published navy, blue, and green palette.
+- Replace the stock Unraid header SVG with accent-colored text while preserving partner logos.
+- Make the injected dashboard section spacers fully transparent.
 - Finish dashboard section rounding by moving square row-group borders onto corner cells.
 - Add a native monochrome paint-brush icon to the Settings page.
 - Enlarge and recenter animated gradient layers to keep their edges off ultrawide screens.
