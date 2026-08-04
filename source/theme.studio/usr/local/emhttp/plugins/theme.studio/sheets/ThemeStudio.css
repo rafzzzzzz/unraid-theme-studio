@@ -102,7 +102,7 @@
 .ts-viewport-switcher button.is-active { background:#333!important; color:#ddd!important; }
 .ts-preview-stage { max-width:1100px; min-height:620px; margin:0 auto; overflow:auto; border:1px solid #343434; border-radius:0 0 10px 10px; background:#070707; transition:padding .25s; }
 .ts-dashboard { --p-bg:#121212;--p-surface:#1d1b1b;--p-surface-alt:#262626;--p-text:#f2f2f2;--p-muted:#a8a8a8;--p-accent:#ff8c2f;--p-accent-hover:#ffad66;--p-border:#404040;--p-header:#1d1b1b;--p-header-text:#fff;--p-good:#33cc33;--p-warn:#ffd324;--p-danger:#e22828;--p-radius:8px;--p-gap:14px;--p-glow:none; width:100%; min-width:740px; min-height:620px; overflow:hidden; background-color:var(--p-bg); background-position:0% 0%,100% 0%; background-repeat:no-repeat; color:var(--p-text); font-family:clear-sans,Arial,sans-serif; transition:width .25s; }
-.ts-dashboard.is-effects-animated { animation:ts-preview-background 4s ease-in-out infinite alternate; }
+.ts-dashboard.is-effects-animated { animation:ts-preview-background 20s ease-in-out infinite alternate; }
 .ts-preview-stage.is-mobile { padding:16px calc(50% - 190px); }
 .ts-preview-stage.is-mobile .ts-dashboard { width:380px; min-width:380px; }
 .ts-dash-header { display:flex; align-items:center; height:62px; padding:0 24px; background:var(--p-header); color:var(--p-header-text); border-bottom:1px solid var(--p-border); }

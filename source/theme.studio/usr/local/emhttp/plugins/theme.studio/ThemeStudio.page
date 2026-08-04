@@ -80,7 +80,7 @@ $themeStudioAssetVersion = (string)@filemtime("$docroot/plugins/theme.studio/ass
           <span><strong>Animated background</strong><small>Slowly moves the gradient and respects reduced-motion settings.</small></span>
         </label>
         <label class="ts-range-label ts-animation-speed"><span>Animation duration <output id="ts-animation-speed-output"></output></span>
-          <input id="ts-animation-speed" type="range" min="1" max="12" step="1">
+          <input id="ts-animation-speed" type="range" min="5" max="60" step="1">
           <small>Longer durations create slower, calmer movement.</small>
         </label>
         <div class="ts-section-heading ts-section-heading-spaced">

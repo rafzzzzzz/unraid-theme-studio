@@ -27,7 +27,8 @@ function theme_studio_defaults(): array
         'gradientStrength' => 0,
         'glowStrength' => 0,
         'animatedBackground' => false,
-        'animationSpeed' => 4,
+        'animationSpeed' => 20,
+        'animationTimingVersion' => 2,
     ];
 }
 
@@ -60,12 +61,16 @@ function theme_studio_validate(array $input): array
     if ($output['animatedBackground'] === null) {
         $output['animatedBackground'] = $defaults['animatedBackground'];
     }
-    $legacyDensityConfig = array_key_exists('density', $input);
     $animationSpeed = (int)($input['animationSpeed'] ?? $defaults['animationSpeed']);
-    if ($legacyDensityConfig || $animationSpeed > 12) {
-        $animationSpeed = (int)round($animationSpeed / 10);
+    $animationTimingVersion = (int)($input['animationTimingVersion'] ?? 0);
+    if (array_key_exists('animationSpeed', $input) && $animationTimingVersion < 2) {
+        $legacyDensityConfig = array_key_exists('density', $input);
+        $animationSpeed = $legacyDensityConfig || $animationSpeed > 12
+            ? (int)round($animationSpeed / 2)
+            : $animationSpeed * 5;
     }
-    $output['animationSpeed'] = max(1, min(12, $animationSpeed));
+    $output['animationSpeed'] = max(5, min(60, $animationSpeed));
+    $output['animationTimingVersion'] = 2;
     return $output;
 }
 
@@ -277,19 +282,26 @@ input:not([type="button"]):not([type="submit"]), select, textarea,
   border-color: var(--input-border-color);
 }
 .dashboard-card, .ui-dialog, .sweet-alert, .context-menu-list,
-div.title, fieldset, table.tablesorter,
-input, select, textarea, button, span.select {
+div.title, fieldset, table.tablesorter, table.disk_status, table.share_status,
+table.usb_mounts, table.samba_mounts, table.usb_absent, table.preclear,
+input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+select, textarea, span.select {
   border-radius: var(--theme-studio-radius) !important;
 }
 table.dashboard > tbody {
   border-radius: var(--theme-studio-radius);
   overflow: hidden;
+  clip-path: inset(0 round var(--theme-studio-radius));
 }
 table.dashboard > tbody > tr:first-child > td:first-child { border-top-left-radius: var(--theme-studio-radius); }
 table.dashboard > tbody > tr:first-child > td:last-child { border-top-right-radius: var(--theme-studio-radius); }
 table.dashboard > tbody > tr:last-child > td:first-child { border-bottom-left-radius: var(--theme-studio-radius); }
 table.dashboard > tbody > tr:last-child > td:last-child { border-bottom-right-radius: var(--theme-studio-radius); }
-table.tablesorter { overflow: hidden; }
+table.tablesorter, table.disk_status, table.share_status,
+table.usb_mounts, table.samba_mounts, table.usb_absent, table.preclear {
+  overflow: hidden;
+  clip-path: inset(0 round var(--theme-studio-radius));
+}
 .dashboard-card,
 .ui-dialog, .sweet-alert, .context-menu-list {
   background-color: var(--theme-studio-panel);

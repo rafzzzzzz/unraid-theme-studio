@@ -14,6 +14,9 @@
 
 <CHANGES>
 ### &version;
+- Clip Main-page and other data-table backgrounds to the selected corner radius.
+- Preserve Unraid's native button corners instead of overriding decorative borders.
+- Retune animated backgrounds to a 5–60 second midpoint range with automatic migration.
 - Fix corner radius across visible UI sections and move it to Advanced.
 - Remove information density and the obsolete Surface tab.
 - Make gradient animation ten times faster and migrate existing speed settings.

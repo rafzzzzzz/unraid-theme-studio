@@ -221,7 +221,7 @@
     var gradientSecondary = hexToRgba(theme.accentHover, gradientStrength / 100 * 0.24);
     var glow = glowStrength > 0 ? 'inset 0 0 ' + glowStrength + 'px ' + hexToRgba(theme.accent, Math.min(0.75, 0.25 + glowStrength / 60)) : 'none';
     var animation = theme.animatedBackground === true && gradientStrength > 0
-      ? 'animation:theme-studio-background ' + Math.max(1,Math.min(12,Number(theme.animationSpeed)||4)) + 's ease-in-out infinite alternate;'
+      ? 'animation:theme-studio-background ' + Math.max(5,Math.min(60,Number(theme.animationSpeed)||20)) + 's ease-in-out infinite alternate;'
       : '';
     return '/* UNRAID Theme Studio — ' + theme.name.replace(/[\r\n]/g,'') + ' */\nhtml:root[class*="Theme--"] {\n' +
       '  --text-color: ' + theme.text + ';\n  --alt-text-color: ' + theme.textMuted + ';\n' +
@@ -260,10 +260,10 @@
       '  --theme-studio-panel: ' + panelSurface + ';\n  --theme-studio-panel-raised: ' + raisedSurface + ';\n  --theme-studio-glow: ' + glow + ';\n}\n\n' +
       'body,#displaybox{background-color:' + theme.background + ';background-image:radial-gradient(circle at 12% 8%,' + gradientPrimary + ' 0,transparent 34%),radial-gradient(circle at 88% 18%,' + gradientSecondary + ' 0,transparent 38%);background-attachment:fixed;background-position:0% 0%,100% 0%;background-repeat:no-repeat;background-size:145% 145%,165% 165%;' + animation + '}\n' +
       '.dashboard-card,.ui-dialog,.sweet-alert,.context-menu-list{background-color:var(--theme-studio-panel);}\n' +
-      '.dashboard-card,.ui-dialog,.sweet-alert,.context-menu-list,div.title,fieldset,table.tablesorter,input,select,textarea,button,span.select{border-radius:var(--theme-studio-radius)!important;}\n' +
-      'table.dashboard>tbody{border-radius:var(--theme-studio-radius);overflow:hidden;}\n' +
+      '.dashboard-card,.ui-dialog,.sweet-alert,.context-menu-list,div.title,fieldset,table.tablesorter,table.disk_status,table.share_status,table.usb_mounts,table.samba_mounts,table.usb_absent,table.preclear,input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]),select,textarea,span.select{border-radius:var(--theme-studio-radius)!important;}\n' +
+      'table.dashboard>tbody{border-radius:var(--theme-studio-radius);overflow:hidden;clip-path:inset(0 round var(--theme-studio-radius));}\n' +
       'table.dashboard>tbody>tr:first-child>td:first-child{border-top-left-radius:var(--theme-studio-radius)}table.dashboard>tbody>tr:first-child>td:last-child{border-top-right-radius:var(--theme-studio-radius)}table.dashboard>tbody>tr:last-child>td:first-child{border-bottom-left-radius:var(--theme-studio-radius)}table.dashboard>tbody>tr:last-child>td:last-child{border-bottom-right-radius:var(--theme-studio-radius)}\n' +
-      'table.tablesorter{overflow:hidden;}\n' +
+      'table.tablesorter,table.disk_status,table.share_status,table.usb_mounts,table.samba_mounts,table.usb_absent,table.preclear{overflow:hidden;clip-path:inset(0 round var(--theme-studio-radius));}\n' +
       'table.dashboard>tbody:hover,.dashboard-card:hover,div.title:hover,fieldset:hover,.ui-dialog:focus-within,.sweet-alert:focus-within,.context-menu-list:focus-within,input:focus,select:focus,textarea:focus{box-shadow:var(--theme-studio-glow);}\n' +
       '@keyframes theme-studio-background{from{background-position:-10% -5%,110% -5%}to{background-position:70% 55%,30% 70%}}\n' +
       '@media (prefers-reduced-motion:reduce){body,#displaybox{animation:none}}\n\n' +
@@ -362,6 +362,7 @@
       file.text().then(function (text) {
         var parsed = JSON.parse(text);
         var legacyDensityConfig = Object.prototype.hasOwnProperty.call(parsed, 'density');
+        var animationTimingVersion = Number(parsed.animationTimingVersion) || 0;
         var incoming = Object.assign({}, defaults, parsed);
         colorFields.forEach(function (field) { if (!validHex(incoming[field[0]])) throw new Error('Invalid ' + field[1] + ' color'); });
         incoming.enabled = incoming.enabled !== false;
@@ -370,8 +371,11 @@
         incoming.glowStrength = clampNumber(incoming.glowStrength, 0, 30, defaults.glowStrength);
         incoming.animatedBackground = incoming.animatedBackground === true;
         var importedSpeed = Number(incoming.animationSpeed);
-        if (legacyDensityConfig || importedSpeed > 12) importedSpeed = importedSpeed / 10;
-        incoming.animationSpeed = clampNumber(importedSpeed, 1, 12, defaults.animationSpeed);
+        if (Object.prototype.hasOwnProperty.call(parsed, 'animationSpeed') && animationTimingVersion < 2) {
+          importedSpeed = legacyDensityConfig || importedSpeed > 12 ? importedSpeed / 2 : importedSpeed * 5;
+        }
+        incoming.animationSpeed = clampNumber(importedSpeed, 5, 60, defaults.animationSpeed);
+        incoming.animationTimingVersion = 2;
         setState(incoming);
         toast('Theme imported — review and apply');
       }).catch(function (error) { toast('Import failed: ' + error.message, true); }).finally(function () { event.target.value = ''; });

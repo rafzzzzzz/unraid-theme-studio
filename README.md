@@ -9,8 +9,8 @@ without editing CSS by hand.
 - Live dashboard preview with desktop and mobile sizes
 - Color controls for the page, panels, text, secondary text, borders, header,
   links/accent, success, warning, and danger states
-- Corner-radius control for dashboard sections, title bars, tables, dialogs,
-  fields, and buttons
+- Corner-radius control for dashboard sections, title bars, data tables,
+  dialogs, and fields while preserving Unraid's native button styling
 - Master enable/disable switch that preserves the saved palette while removing
   all generated Theme Studio overrides
 - Advanced effects for panel transparency, accent gradients and glow, plus an

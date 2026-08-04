@@ -2,8 +2,8 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "theme.studio">
 <!ENTITY author    "Rafael Marques">
-<!ENTITY version   "2026.08.04.2">
-<!ENTITY md5       "fa10524812fa6ea48d0f23ca86c931fb">
+<!ENTITY version   "2026.08.04.3">
+<!ENTITY md5       "b6a095e573a90dba91714acd9b2b1fae">
 <!ENTITY github    "rafzzzzzz/unraid-theme-studio">
 <!ENTITY branch    "main">
 <!ENTITY launch    "Settings/UserPreferences/ThemeStudio">
@@ -14,6 +14,9 @@
 
 <CHANGES>
 ### &version;
+- Clip Main-page and other data-table backgrounds to the selected corner radius.
+- Preserve Unraid's native button corners instead of overriding decorative borders.
+- Retune animated backgrounds to a 5–60 second midpoint range with automatic migration.
 - Fix corner radius across visible UI sections and move it to Advanced.
 - Remove information density and the obsolete Surface tab.
 - Make gradient animation ten times faster and migrate existing speed settings.
