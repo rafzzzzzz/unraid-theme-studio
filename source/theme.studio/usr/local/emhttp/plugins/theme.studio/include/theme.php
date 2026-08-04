@@ -23,12 +23,11 @@ function theme_studio_defaults(): array
         'warning' => '#ffd324',
         'danger' => '#e22828',
         'radius' => 8,
-        'density' => 'comfortable',
         'transparency' => 0,
         'gradientStrength' => 0,
         'glowStrength' => 0,
         'animatedBackground' => false,
-        'animationSpeed' => 40,
+        'animationSpeed' => 4,
     ];
 }
 
@@ -45,7 +44,7 @@ function theme_studio_validate(array $input): array
     $output['name'] = substr($output['name'] ?: $defaults['name'], 0, 48);
 
     foreach (array_keys($defaults) as $key) {
-        if (!is_string($defaults[$key]) || $key === 'name' || $key === 'density') {
+        if (!is_string($defaults[$key]) || $key === 'name') {
             continue;
         }
         $value = strtoupper(trim((string)($input[$key] ?? $defaults[$key])));
@@ -53,8 +52,6 @@ function theme_studio_validate(array $input): array
     }
 
     $output['radius'] = max(0, min(24, (int)($input['radius'] ?? $defaults['radius'])));
-    $density = (string)($input['density'] ?? $defaults['density']);
-    $output['density'] = in_array($density, ['compact', 'comfortable'], true) ? $density : $defaults['density'];
     $output['transparency'] = max(0, min(60, (int)($input['transparency'] ?? $defaults['transparency'])));
     $output['gradientStrength'] = max(0, min(100, (int)($input['gradientStrength'] ?? $defaults['gradientStrength'])));
     $output['glowStrength'] = max(0, min(30, (int)($input['glowStrength'] ?? $defaults['glowStrength'])));
@@ -63,7 +60,12 @@ function theme_studio_validate(array $input): array
     if ($output['animatedBackground'] === null) {
         $output['animatedBackground'] = $defaults['animatedBackground'];
     }
-    $output['animationSpeed'] = max(10, min(120, (int)($input['animationSpeed'] ?? $defaults['animationSpeed'])));
+    $legacyDensityConfig = array_key_exists('density', $input);
+    $animationSpeed = (int)($input['animationSpeed'] ?? $defaults['animationSpeed']);
+    if ($legacyDensityConfig || $animationSpeed > 12) {
+        $animationSpeed = (int)round($animationSpeed / 10);
+    }
+    $output['animationSpeed'] = max(1, min(12, $animationSpeed));
     return $output;
 }
 
@@ -91,7 +93,6 @@ function theme_studio_css(array $theme): string
     if (!$t['enabled']) {
         return "/* UNRAID Theme Studio is disabled. Saved theme settings are preserved. */\n";
     }
-    $gap = $t['density'] === 'compact' ? '6px' : '10px';
     $name = str_replace(['*/', "\r", "\n"], '', $t['name']);
     $panelOpacity = 1 - ($t['transparency'] / 100);
     $panelSurface = theme_studio_rgba($t['surface'], $panelOpacity);
@@ -99,7 +100,7 @@ function theme_studio_css(array $theme): string
     $gradientPrimary = theme_studio_rgba($t['accent'], ($t['gradientStrength'] / 100) * 0.36);
     $gradientSecondary = theme_studio_rgba($t['accentHover'], ($t['gradientStrength'] / 100) * 0.24);
     $glow = $t['glowStrength'] > 0
-        ? '0 0 ' . $t['glowStrength'] . 'px ' . theme_studio_rgba($t['accent'], min(0.75, 0.25 + ($t['glowStrength'] / 60)))
+        ? 'inset 0 0 ' . $t['glowStrength'] . 'px ' . theme_studio_rgba($t['accent'], min(0.75, 0.25 + ($t['glowStrength'] / 60)))
         : 'none';
     $animation = $t['animatedBackground'] && $t['gradientStrength'] > 0
         ? "animation: theme-studio-background {$t['animationSpeed']}s ease-in-out infinite alternate;"
@@ -215,7 +216,6 @@ html:root[class*="Theme--"] {
   --theme-studio-warning: {$t['warning']};
   --theme-studio-danger: {$t['danger']};
   --theme-studio-radius: {$t['radius']}px;
-  --theme-studio-gap: {$gap};
   --theme-studio-panel: {$panelSurface};
   --theme-studio-panel-raised: {$raisedSurface};
   --theme-studio-glow: {$glow};
@@ -276,25 +276,37 @@ input:not([type="button"]):not([type="submit"]), select, textarea,
   color: var(--text-color);
   border-color: var(--input-border-color);
 }
-.dashboard .box, .dashboard-card, .tile, .ui-dialog, .sweet-alert,
-input, select, textarea, button { border-radius: var(--theme-studio-radius); }
-.dashboard .box, .dashboard-card, .tile { background-color: var(--dashboard-background-color); }
-.dashboard .box, .dashboard-card, .tile,
+.dashboard-card, .ui-dialog, .sweet-alert, .context-menu-list,
+div.title, fieldset, table.tablesorter,
+input, select, textarea, button, span.select {
+  border-radius: var(--theme-studio-radius) !important;
+}
+table.dashboard > tbody {
+  border-radius: var(--theme-studio-radius);
+  overflow: hidden;
+}
+table.dashboard > tbody > tr:first-child > td:first-child { border-top-left-radius: var(--theme-studio-radius); }
+table.dashboard > tbody > tr:first-child > td:last-child { border-top-right-radius: var(--theme-studio-radius); }
+table.dashboard > tbody > tr:last-child > td:first-child { border-bottom-left-radius: var(--theme-studio-radius); }
+table.dashboard > tbody > tr:last-child > td:last-child { border-bottom-right-radius: var(--theme-studio-radius); }
+table.tablesorter { overflow: hidden; }
+.dashboard-card,
 .ui-dialog, .sweet-alert, .context-menu-list {
   background-color: var(--theme-studio-panel);
 }
-.dashboard .box:hover, .dashboard-card:hover, .tile:hover,
-input:focus, select:focus, textarea:focus,
-.Theme--nav-top .nav-item.active:after {
+table.dashboard > tbody:hover, .dashboard-card:hover,
+div.title:hover, fieldset:hover,
+.ui-dialog:focus-within, .sweet-alert:focus-within,
+.context-menu-list:focus-within,
+input:focus, select:focus, textarea:focus {
   box-shadow: var(--theme-studio-glow);
 }
 .green, .status-green, .fa-check-circle { color: var(--theme-studio-positive); }
 .orange, .status-orange, .fa-exclamation-triangle { color: var(--theme-studio-warning); }
 .red, .status-red, .fa-times-circle { color: var(--theme-studio-danger); }
-table tbody td { padding-top: var(--theme-studio-gap); padding-bottom: var(--theme-studio-gap); }
 @keyframes theme-studio-background {
-  from { background-position: 0% 0%, 100% 0%; }
-  to { background-position: 28% 18%, 72% 30%; }
+  from { background-position: -10% -5%, 110% -5%; }
+  to { background-position: 70% 55%, 30% 70%; }
 }
 @media (prefers-reduced-motion: reduce) {
   body, #displaybox { animation: none; }

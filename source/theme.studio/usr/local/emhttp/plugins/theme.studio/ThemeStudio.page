@@ -51,28 +51,11 @@ $themeStudioAssetVersion = (string)@filemtime("$docroot/plugins/theme.studio/ass
 
       <nav class="ts-tabs" aria-label="Editor sections">
         <button type="button" class="is-active" data-tab="colors">Colors</button>
-        <button type="button" data-tab="surface">Surface</button>
         <button type="button" data-tab="advanced">Advanced</button>
       </nav>
 
       <section class="ts-panel is-active" data-panel="colors">
         <div id="ts-color-controls"></div>
-      </section>
-
-      <section class="ts-panel" data-panel="surface">
-        <label class="ts-range-label"><span>Corner radius <output id="ts-radius-output"></output></span>
-          <input id="ts-radius" type="range" min="0" max="24" step="1">
-        </label>
-        <fieldset class="ts-segmented">
-          <legend>Information density</legend>
-          <label><input type="radio" name="ts-density" value="compact"> Compact</label>
-          <label><input type="radio" name="ts-density" value="comfortable"> Comfortable</label>
-        </fieldset>
-        <div class="ts-contrast-card">
-          <span class="ts-contrast-icon">Aa</span>
-          <div><strong>Text contrast</strong><small id="ts-contrast-copy">Checking…</small></div>
-          <span id="ts-contrast-badge" class="ts-badge">—</span>
-        </div>
       </section>
 
       <section class="ts-panel" data-panel="advanced">
@@ -97,9 +80,22 @@ $themeStudioAssetVersion = (string)@filemtime("$docroot/plugins/theme.studio/ass
           <span><strong>Animated background</strong><small>Slowly moves the gradient and respects reduced-motion settings.</small></span>
         </label>
         <label class="ts-range-label ts-animation-speed"><span>Animation duration <output id="ts-animation-speed-output"></output></span>
-          <input id="ts-animation-speed" type="range" min="10" max="120" step="5">
+          <input id="ts-animation-speed" type="range" min="1" max="12" step="1">
           <small>Longer durations create slower, calmer movement.</small>
         </label>
+        <div class="ts-section-heading ts-section-heading-spaced">
+          <span class="ts-section-icon"><i class="fa fa-square-o"></i></span>
+          <div><strong>Shape</strong><small>Round visible panels, tables, dialogs, and controls</small></div>
+        </div>
+        <label class="ts-range-label"><span>Corner radius <output id="ts-radius-output"></output></span>
+          <input id="ts-radius" type="range" min="0" max="24" step="1">
+          <small>0 px keeps square corners; higher values make UI sections rounder.</small>
+        </label>
+        <div class="ts-contrast-card">
+          <span class="ts-contrast-icon">Aa</span>
+          <div><strong>Text contrast</strong><small id="ts-contrast-copy">Checking…</small></div>
+          <span id="ts-contrast-badge" class="ts-badge">—</span>
+        </div>
       </section>
 
       <footer class="ts-tools">

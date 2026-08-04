@@ -2,8 +2,8 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "theme.studio">
 <!ENTITY author    "Rafael Marques">
-<!ENTITY version   "2026.08.04.1">
-<!ENTITY md5       "c804d2ee6588be33f870ad03bc2ac1ae">
+<!ENTITY version   "2026.08.04.2">
+<!ENTITY md5       "fa10524812fa6ea48d0f23ca86c931fb">
 <!ENTITY github    "rafzzzzzz/unraid-theme-studio">
 <!ENTITY branch    "main">
 <!ENTITY launch    "Settings/UserPreferences/ThemeStudio">
@@ -14,6 +14,10 @@
 
 <CHANGES>
 ### &version;
+- Fix corner radius across visible UI sections and move it to Advanced.
+- Remove information density and the obsolete Surface tab.
+- Make gradient animation ten times faster and migrate existing speed settings.
+- Scope accent glow to individual dashboard sections with an unclipped inset effect.
 - Add Advanced effects for transparency, gradients, glow, and animated backgrounds.
 - Add a master enable/disable switch without deleting saved theme settings.
 - Override Unassigned Devices and Preclear hardcoded table colors.

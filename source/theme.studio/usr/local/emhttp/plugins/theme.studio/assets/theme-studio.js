@@ -84,7 +84,6 @@
     query('#ts-animation-speed-output').textContent = state.animationSpeed + ' sec';
     query('#ts-animation-speed').disabled = state.animatedBackground !== true;
     query('.ts-animation-speed').classList.toggle('is-disabled', state.animatedBackground !== true);
-    queryAll('input[name="ts-density"]').forEach(function (input) { input.checked = input.value === state.density; });
     queryAll('.ts-color-row').forEach(function (row) {
       var value = state[row.dataset.key];
       row.style.setProperty('--swatch', value);
@@ -115,13 +114,12 @@
     var gradientSecondary = hexToRgba(state.accentHover, (state.gradientStrength / 100) * 0.24);
     preview.style.setProperty('--p-surface', hexToRgba(state.surface, panelOpacity));
     preview.style.setProperty('--p-surface-alt', hexToRgba(state.surfaceAlt, panelOpacity));
-    preview.style.setProperty('--p-glow', state.glowStrength > 0 ? '0 0 ' + state.glowStrength + 'px ' + hexToRgba(state.accent, Math.min(0.75, 0.25 + state.glowStrength / 60)) : 'none');
+    preview.style.setProperty('--p-glow', state.glowStrength > 0 ? 'inset 0 0 ' + state.glowStrength + 'px ' + hexToRgba(state.accent, Math.min(0.75, 0.25 + state.glowStrength / 60)) : 'none');
     preview.style.backgroundImage = 'radial-gradient(circle at 12% 8%,' + gradientPrimary + ' 0,transparent 34%),radial-gradient(circle at 88% 18%,' + gradientSecondary + ' 0,transparent 38%)';
     preview.style.backgroundSize = '145% 145%,165% 165%';
     preview.style.animationDuration = state.animationSpeed + 's';
     preview.classList.toggle('is-effects-animated', state.animatedBackground === true && state.gradientStrength > 0);
     preview.style.setProperty('--p-radius', state.radius + 'px');
-    preview.style.setProperty('--p-gap', state.density === 'compact' ? '8px' : '14px');
     updateContrast();
   }
 
@@ -214,7 +212,6 @@
   }
 
   function cssForTheme(theme) {
-    var gap = theme.density === 'compact' ? '6px' : '10px';
     var transparency = Math.max(0, Math.min(60, Number(theme.transparency) || 0));
     var gradientStrength = Math.max(0, Math.min(100, Number(theme.gradientStrength) || 0));
     var glowStrength = Math.max(0, Math.min(30, Number(theme.glowStrength) || 0));
@@ -222,9 +219,9 @@
     var raisedSurface = hexToRgba(theme.surfaceAlt, 1 - transparency / 100);
     var gradientPrimary = hexToRgba(theme.accent, gradientStrength / 100 * 0.36);
     var gradientSecondary = hexToRgba(theme.accentHover, gradientStrength / 100 * 0.24);
-    var glow = glowStrength > 0 ? '0 0 ' + glowStrength + 'px ' + hexToRgba(theme.accent, Math.min(0.75, 0.25 + glowStrength / 60)) : 'none';
+    var glow = glowStrength > 0 ? 'inset 0 0 ' + glowStrength + 'px ' + hexToRgba(theme.accent, Math.min(0.75, 0.25 + glowStrength / 60)) : 'none';
     var animation = theme.animatedBackground === true && gradientStrength > 0
-      ? 'animation:theme-studio-background ' + Math.max(10,Math.min(120,Number(theme.animationSpeed)||40)) + 's ease-in-out infinite alternate;'
+      ? 'animation:theme-studio-background ' + Math.max(1,Math.min(12,Number(theme.animationSpeed)||4)) + 's ease-in-out infinite alternate;'
       : '';
     return '/* UNRAID Theme Studio — ' + theme.name.replace(/[\r\n]/g,'') + ' */\nhtml:root[class*="Theme--"] {\n' +
       '  --text-color: ' + theme.text + ';\n  --alt-text-color: ' + theme.textMuted + ';\n' +
@@ -260,11 +257,15 @@
       '  --dynamix-awesomplete-mark-bg-color: ' + theme.warning + ';\n  --dynamix-awesomplete-mark-hover-bg-color: ' + theme.accentHover + ';\n  --dynamix-awesomplete-mark-selected-bg-color: ' + theme.positive + ';\n' +
       '  --theme-studio-positive: ' + theme.positive + ';\n  --theme-studio-warning: ' + theme.warning + ';\n' +
       '  --theme-studio-danger: ' + theme.danger + ';\n  --theme-studio-radius: ' + theme.radius + 'px;\n' +
-      '  --theme-studio-gap: ' + gap + ';\n  --theme-studio-panel: ' + panelSurface + ';\n  --theme-studio-panel-raised: ' + raisedSurface + ';\n  --theme-studio-glow: ' + glow + ';\n}\n\n' +
+      '  --theme-studio-panel: ' + panelSurface + ';\n  --theme-studio-panel-raised: ' + raisedSurface + ';\n  --theme-studio-glow: ' + glow + ';\n}\n\n' +
       'body,#displaybox{background-color:' + theme.background + ';background-image:radial-gradient(circle at 12% 8%,' + gradientPrimary + ' 0,transparent 34%),radial-gradient(circle at 88% 18%,' + gradientSecondary + ' 0,transparent 38%);background-attachment:fixed;background-position:0% 0%,100% 0%;background-repeat:no-repeat;background-size:145% 145%,165% 165%;' + animation + '}\n' +
-      '.dashboard .box,.dashboard-card,.tile,.ui-dialog,.sweet-alert,.context-menu-list{background-color:var(--theme-studio-panel);}\n' +
-      '.dashboard .box:hover,.dashboard-card:hover,.tile:hover,input:focus,select:focus,textarea:focus,.Theme--nav-top .nav-item.active:after{box-shadow:var(--theme-studio-glow);}\n' +
-      '@keyframes theme-studio-background{from{background-position:0% 0%,100% 0%}to{background-position:28% 18%,72% 30%}}\n' +
+      '.dashboard-card,.ui-dialog,.sweet-alert,.context-menu-list{background-color:var(--theme-studio-panel);}\n' +
+      '.dashboard-card,.ui-dialog,.sweet-alert,.context-menu-list,div.title,fieldset,table.tablesorter,input,select,textarea,button,span.select{border-radius:var(--theme-studio-radius)!important;}\n' +
+      'table.dashboard>tbody{border-radius:var(--theme-studio-radius);overflow:hidden;}\n' +
+      'table.dashboard>tbody>tr:first-child>td:first-child{border-top-left-radius:var(--theme-studio-radius)}table.dashboard>tbody>tr:first-child>td:last-child{border-top-right-radius:var(--theme-studio-radius)}table.dashboard>tbody>tr:last-child>td:first-child{border-bottom-left-radius:var(--theme-studio-radius)}table.dashboard>tbody>tr:last-child>td:last-child{border-bottom-right-radius:var(--theme-studio-radius)}\n' +
+      'table.tablesorter{overflow:hidden;}\n' +
+      'table.dashboard>tbody:hover,.dashboard-card:hover,div.title:hover,fieldset:hover,.ui-dialog:focus-within,.sweet-alert:focus-within,.context-menu-list:focus-within,input:focus,select:focus,textarea:focus{box-shadow:var(--theme-studio-glow);}\n' +
+      '@keyframes theme-studio-background{from{background-position:-10% -5%,110% -5%}to{background-position:70% 55%,30% 70%}}\n' +
       '@media (prefers-reduced-motion:reduce){body,#displaybox{animation:none}}\n\n' +
       'table.tablesorter { background-color: var(--dynamix-tablesorter-tbody-row-bg-color); }\n' +
       'html:root[class*="Theme--"] table.usb_mounts,\n' +
@@ -313,7 +314,6 @@
     query('#ts-glow-strength').addEventListener('input', function (event) { state.glowStrength = Number(event.target.value); query('#ts-glow-output').textContent = state.glowStrength === 0 ? 'Off' : state.glowStrength + ' px'; updatePreview(); scheduleHistory(); });
     query('#ts-animated-background').addEventListener('change', function (event) { state.animatedBackground = event.target.checked; query('#ts-animation-speed').disabled = !state.animatedBackground; query('.ts-animation-speed').classList.toggle('is-disabled', !state.animatedBackground); updatePreview(); scheduleHistory(); });
     query('#ts-animation-speed').addEventListener('input', function (event) { state.animationSpeed = Number(event.target.value); query('#ts-animation-speed-output').textContent = state.animationSpeed + ' sec'; updatePreview(); scheduleHistory(); });
-    queryAll('input[name="ts-density"]').forEach(function (input) { input.addEventListener('change', function () { if (input.checked) { state.density = input.value; updatePreview(); scheduleHistory(); } }); });
 
     queryAll('.ts-color-row').forEach(function (row) {
       var picker = row.querySelector('input[type="color"]');
@@ -360,14 +360,18 @@
     query('#ts-import-file').addEventListener('change', function (event) {
       var file = event.target.files[0]; if (!file) return;
       file.text().then(function (text) {
-        var incoming = Object.assign({}, defaults, JSON.parse(text));
+        var parsed = JSON.parse(text);
+        var legacyDensityConfig = Object.prototype.hasOwnProperty.call(parsed, 'density');
+        var incoming = Object.assign({}, defaults, parsed);
         colorFields.forEach(function (field) { if (!validHex(incoming[field[0]])) throw new Error('Invalid ' + field[1] + ' color'); });
         incoming.enabled = incoming.enabled !== false;
         incoming.transparency = clampNumber(incoming.transparency, 0, 60, defaults.transparency);
         incoming.gradientStrength = clampNumber(incoming.gradientStrength, 0, 100, defaults.gradientStrength);
         incoming.glowStrength = clampNumber(incoming.glowStrength, 0, 30, defaults.glowStrength);
         incoming.animatedBackground = incoming.animatedBackground === true;
-        incoming.animationSpeed = clampNumber(incoming.animationSpeed, 10, 120, defaults.animationSpeed);
+        var importedSpeed = Number(incoming.animationSpeed);
+        if (legacyDensityConfig || importedSpeed > 12) importedSpeed = importedSpeed / 10;
+        incoming.animationSpeed = clampNumber(importedSpeed, 1, 12, defaults.animationSpeed);
         setState(incoming);
         toast('Theme imported — review and apply');
       }).catch(function (error) { toast('Import failed: ' + error.message, true); }).finally(function () { event.target.value = ''; });

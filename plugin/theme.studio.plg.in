@@ -14,6 +14,10 @@
 
 <CHANGES>
 ### &version;
+- Fix corner radius across visible UI sections and move it to Advanced.
+- Remove information density and the obsolete Surface tab.
+- Make gradient animation ten times faster and migrate existing speed settings.
+- Scope accent glow to individual dashboard sections with an unclipped inset effect.
 - Add Advanced effects for transparency, gradients, glow, and animated backgrounds.
 - Add a master enable/disable switch without deleting saved theme settings.
 - Override Unassigned Devices and Preclear hardcoded table colors.
