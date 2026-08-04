@@ -1,6 +1,6 @@
 Menu="UserPreferences:30"
 Title="Theme Studio"
-Icon="icon-paint-brush"
+Icon="paint-brush"
 Tag="paint-brush"
 ---
 <?php

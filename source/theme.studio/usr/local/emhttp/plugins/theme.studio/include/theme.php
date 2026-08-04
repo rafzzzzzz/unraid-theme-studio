@@ -226,7 +226,7 @@ html:root[class*="Theme--"] {
   --theme-studio-glow: {$glow};
 }
 
-body, #displaybox {
+body {
   background-color: var(--background-color);
   background-image:
     radial-gradient(circle at 12% 8%, {$gradientPrimary} 0, transparent 34%),
@@ -234,9 +234,13 @@ body, #displaybox {
   background-attachment: fixed;
   background-position: 0% 0%, 100% 0%;
   background-repeat: no-repeat;
-  background-size: 145% 145%, 165% 165%;
+  background-size: 220% 220%, 240% 240%;
   color: var(--text-color);
   {$animation}
+}
+#displaybox {
+  background-color: transparent;
+  background-image: none;
 }
 a, .fa-external-link { color: var(--link-text-color); }
 table.tablesorter { background-color: var(--dynamix-tablesorter-tbody-row-bg-color); }
@@ -289,10 +293,22 @@ select, textarea, span.select {
   border-radius: var(--theme-studio-radius) !important;
 }
 table.dashboard > tbody {
+  background-color: transparent !important;
+  border: 0 !important;
   border-radius: var(--theme-studio-radius);
   overflow: hidden;
   clip-path: inset(0 round var(--theme-studio-radius));
 }
+table.dashboard > tbody > tr > td {
+  background-color: var(--dashboard-background-color);
+}
+table.dashboard > tbody > tr.alert > td { background-color: var(--red-300); }
+table.dashboard > tbody > tr.warn > td { background-color: var(--yellow-200); }
+table.dashboard > tbody > tr.past > td { background-color: var(--red-100); }
+table.dashboard > tbody > tr > td:first-child { border-left: 1px solid var(--dashboard-border-color) !important; }
+table.dashboard > tbody > tr > td:last-child { border-right: 1px solid var(--dashboard-border-color) !important; }
+table.dashboard > tbody > tr:first-child > td { border-top: 1px solid var(--dashboard-border-color) !important; }
+table.dashboard > tbody > tr:last-child > td { border-bottom: 1px solid var(--dashboard-border-color) !important; }
 table.dashboard > tbody > tr:first-child > td:first-child { border-top-left-radius: var(--theme-studio-radius); }
 table.dashboard > tbody > tr:first-child > td:last-child { border-top-right-radius: var(--theme-studio-radius); }
 table.dashboard > tbody > tr:last-child > td:first-child { border-bottom-left-radius: var(--theme-studio-radius); }
@@ -317,11 +333,11 @@ input:focus, select:focus, textarea:focus {
 .orange, .status-orange, .fa-exclamation-triangle { color: var(--theme-studio-warning); }
 .red, .status-red, .fa-times-circle { color: var(--theme-studio-danger); }
 @keyframes theme-studio-background {
-  from { background-position: -10% -5%, 110% -5%; }
-  to { background-position: 70% 55%, 30% 70%; }
+  from { background-position: 0% 5%, 100% 5%; }
+  to { background-position: 55% 45%, 45% 60%; }
 }
 @media (prefers-reduced-motion: reduce) {
-  body, #displaybox { animation: none; }
+  body { animation: none; }
 }
 CSS;
 }

@@ -258,15 +258,17 @@
       '  --theme-studio-positive: ' + theme.positive + ';\n  --theme-studio-warning: ' + theme.warning + ';\n' +
       '  --theme-studio-danger: ' + theme.danger + ';\n  --theme-studio-radius: ' + theme.radius + 'px;\n' +
       '  --theme-studio-panel: ' + panelSurface + ';\n  --theme-studio-panel-raised: ' + raisedSurface + ';\n  --theme-studio-glow: ' + glow + ';\n}\n\n' +
-      'body,#displaybox{background-color:' + theme.background + ';background-image:radial-gradient(circle at 12% 8%,' + gradientPrimary + ' 0,transparent 34%),radial-gradient(circle at 88% 18%,' + gradientSecondary + ' 0,transparent 38%);background-attachment:fixed;background-position:0% 0%,100% 0%;background-repeat:no-repeat;background-size:145% 145%,165% 165%;' + animation + '}\n' +
+      'body{background-color:' + theme.background + ';background-image:radial-gradient(circle at 12% 8%,' + gradientPrimary + ' 0,transparent 34%),radial-gradient(circle at 88% 18%,' + gradientSecondary + ' 0,transparent 38%);background-attachment:fixed;background-position:0% 0%,100% 0%;background-repeat:no-repeat;background-size:220% 220%,240% 240%;' + animation + '}\n' +
+      '#displaybox{background-color:transparent;background-image:none}\n' +
       '.dashboard-card,.ui-dialog,.sweet-alert,.context-menu-list{background-color:var(--theme-studio-panel);}\n' +
       '.dashboard-card,.ui-dialog,.sweet-alert,.context-menu-list,div.title,fieldset,table.tablesorter,table.disk_status,table.share_status,table.usb_mounts,table.samba_mounts,table.usb_absent,table.preclear,input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]),select,textarea,span.select{border-radius:var(--theme-studio-radius)!important;}\n' +
-      'table.dashboard>tbody{border-radius:var(--theme-studio-radius);overflow:hidden;clip-path:inset(0 round var(--theme-studio-radius));}\n' +
+      'table.dashboard>tbody{background-color:transparent!important;border:0!important;border-radius:var(--theme-studio-radius);overflow:hidden;clip-path:inset(0 round var(--theme-studio-radius));}\n' +
+      'table.dashboard>tbody>tr>td{background-color:var(--dashboard-background-color)}table.dashboard>tbody>tr.alert>td{background-color:var(--red-300)}table.dashboard>tbody>tr.warn>td{background-color:var(--yellow-200)}table.dashboard>tbody>tr.past>td{background-color:var(--red-100)}table.dashboard>tbody>tr>td:first-child{border-left:1px solid var(--dashboard-border-color)!important}table.dashboard>tbody>tr>td:last-child{border-right:1px solid var(--dashboard-border-color)!important}table.dashboard>tbody>tr:first-child>td{border-top:1px solid var(--dashboard-border-color)!important}table.dashboard>tbody>tr:last-child>td{border-bottom:1px solid var(--dashboard-border-color)!important}\n' +
       'table.dashboard>tbody>tr:first-child>td:first-child{border-top-left-radius:var(--theme-studio-radius)}table.dashboard>tbody>tr:first-child>td:last-child{border-top-right-radius:var(--theme-studio-radius)}table.dashboard>tbody>tr:last-child>td:first-child{border-bottom-left-radius:var(--theme-studio-radius)}table.dashboard>tbody>tr:last-child>td:last-child{border-bottom-right-radius:var(--theme-studio-radius)}\n' +
       'table.tablesorter,table.disk_status,table.share_status,table.usb_mounts,table.samba_mounts,table.usb_absent,table.preclear{overflow:hidden;clip-path:inset(0 round var(--theme-studio-radius));}\n' +
       'table.dashboard>tbody:hover,.dashboard-card:hover,div.title:hover,fieldset:hover,.ui-dialog:focus-within,.sweet-alert:focus-within,.context-menu-list:focus-within,input:focus,select:focus,textarea:focus{box-shadow:var(--theme-studio-glow);}\n' +
-      '@keyframes theme-studio-background{from{background-position:-10% -5%,110% -5%}to{background-position:70% 55%,30% 70%}}\n' +
-      '@media (prefers-reduced-motion:reduce){body,#displaybox{animation:none}}\n\n' +
+      '@keyframes theme-studio-background{from{background-position:0% 5%,100% 5%}to{background-position:55% 45%,45% 60%}}\n' +
+      '@media (prefers-reduced-motion:reduce){body{animation:none}}\n\n' +
       'table.tablesorter { background-color: var(--dynamix-tablesorter-tbody-row-bg-color); }\n' +
       'html:root[class*="Theme--"] table.usb_mounts,\n' +
       'html:root[class*="Theme--"] table.samba_mounts,\n' +
